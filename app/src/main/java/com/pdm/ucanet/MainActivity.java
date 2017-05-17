@@ -1,4 +1,4 @@
-package com.perez00356315.ucanet;
+package com.pdm.ucanet;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

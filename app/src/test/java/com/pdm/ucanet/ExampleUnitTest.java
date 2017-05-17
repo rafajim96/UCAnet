@@ -1,4 +1,4 @@
-package com.perez00356315.ucanet;
+package com.pdm.ucanet;
 
 import org.junit.Test;
 
