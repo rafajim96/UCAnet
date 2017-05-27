@@ -1,5 +1,6 @@
 package com.pdm.ucanet;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -17,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private TextView message;
     private Button login;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private class LongOperation extends AsyncTask<String, Void, String> {
+    private class LongOperation extends AsyncTask<String, String, String> {
+        ProgressDialog progDailog = new ProgressDialog(MainActivity.this);
 
         @Override
         protected String doInBackground(String... params) {
@@ -67,29 +68,39 @@ public class MainActivity extends AppCompatActivity {
             //txt.setText("Executed"); // txt.setText(result);
             // might want to change "executed" for the returned string passed
             // into onPostExecute() but that is upto you
-
             message = (TextView) findViewById(R.id.messageText);
-
+            super.onPostExecute(result);
+            progDailog.dismiss();
             if (result.equals("Loggin in")){
                 message.setText(result);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     Thread.interrupted();
                 }
+
                 Intent i = new Intent(MainActivity.this, HomeActivity.class);
                 finish();  //Kill the activity from which you will go to next activity
                 startActivity(i);
             }else{
+
                 message.setText(result);
             }
+
         }
 
         @Override
-        protected void onPreExecute() {}
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog.setMessage("Validating...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+        }
 
         @Override
-        protected void onProgressUpdate(Void... values) {}
+        protected void onProgressUpdate(String... values) {}
     }
 
 
