@@ -6,14 +6,26 @@
 
 
     <!-- UPPER BUTTONS LINEARLAYOUT -->
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgHomeButton"
+            android:layout_width="0dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_sort_by_size"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"/>
 
         <ImageButton
             android:id="@+id/imgProfileButton"
@@ -24,20 +36,6 @@
             app:srcCompat="@android:drawable/ic_menu_my_calendar"
             android:background="?attr/selectableItemBackgroundBorderless" />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"/>
-
-
-        <ImageButton
-            android:id="@+id/imgMessageButton"
-            android:layout_margin="8dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/sym_action_email"
-            android:background="?attr/selectableItemBackgroundBorderless" />
 
         <View
             android:layout_width="1dp"
@@ -67,33 +65,26 @@
 
     <!-- BODY LINEARLAYOUT -->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textMyGroups"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text="My groups" />
 
         <!-- LINEARLAYOUT THAT WILL CONTAIN EVER GROUP FRAGMENT -->
         <LinearLayout
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
 
         </LinearLayout>
 
-    </LinearLayout>
     
     <!-- LOWER BUTTONS LINEAR LAYOUT -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,37 +92,59 @@
         android:layout_gravity="bottom|end"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:text="A" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:text="B" />
 
-        <TextView
-            android:id="@+id/textView8"
+        <ImageButton
+            android:id="@+id/imgThreadButton"
+            android:layout_margin="8dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="C" />
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            android:background="?attr/selectableItemBackgroundBorderless" />
 
-        <TextView
-            android:id="@+id/textView7"
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"/>
+
+        <ImageButton
+            android:id="@+id/imgSearchButton"
+            android:layout_margin="8dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="D" />
+            app:srcCompat="@android:drawable/ic_menu_search"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"/>
+
+        <ImageButton
+            android:id="@+id/imgSettingsButton"
+            android:layout_width="0dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_preferences"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"/>
+
+        <ImageButton
+            android:id="@+id/imgHelpButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@android:drawable/ic_menu_help" />
+
 
     </LinearLayout>
 

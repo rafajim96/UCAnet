@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
+            //CHECK IF THE DATA OF THE LOGIN IS CORRECT
             for (int i = 0; i < 1; i++) {
                 try {
                     Thread.sleep(1000);
