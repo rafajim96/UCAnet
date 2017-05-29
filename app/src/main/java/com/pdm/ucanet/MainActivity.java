@@ -13,12 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.pdm.ucanet.resourceManagers.InformationAdapter;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private TextView message;
     private Button login;
-
+    private InformationAdapter inf = new InformationAdapter();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +59,23 @@ public class MainActivity extends AppCompatActivity {
                     Thread.interrupted();
                 }
             }
-            if (params[0].equals("admin") && params[1].equals("123")){
-                return "Loggin in";
-
-            }else{
-                return "Invalid data";
+            try {
+                if(inf.login(params[0])){
+                    return "Loggin in";
+                }
+                else{
+                    return "Invalid data";
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            //if (params[0].equals("admin") && params[1].equals("123")){
+              //  return "Loggin in";
+
+            //}
+            //else{
+                return "Invalid data";
+            //}
         }
 
         @Override
