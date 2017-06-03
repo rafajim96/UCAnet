@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView message;
     private Button login;
     private InformationAdapter inf = new InformationAdapter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +70,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //if (params[0].equals("admin") && params[1].equals("123")){
-              //  return "Loggin in";
-
-            //}
-            //else{
-                return "Invalid data";
-            //}
+            return "Invalid data";
         }
 
         @Override
