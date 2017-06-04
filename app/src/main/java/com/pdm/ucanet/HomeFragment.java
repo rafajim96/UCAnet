@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
         courses.add(c);
 
         recyclerView.setHasFixedSize(true);
-        StaggeredGridLayoutManager straggLayoutManager = new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager straggLayoutManager = new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(straggLayoutManager);
         recyclerView.setAdapter(new StaggeredGridLayoutAdapter(getActivity(), courses));
 

@@ -1,6 +1,15 @@
 package com.pdm.ucanet.resourceManagers;
 
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,13 +26,16 @@ import java.util.Map;
 
 public class InformationAdapter {
 
-    private final String loginFile = "https://mapacheproject.xyz/UCAnet/code/test3.php";
+    private final String loginFile = "https://mapacheproject.xyz/UCAnet/code/login.php";
+    private final int timeout = 5000;
 
-    public boolean login(String name) throws IOException {
+
+    public boolean login(String name, String pass) throws IOException {
         boolean logged = false;
         URL url = new URL(loginFile);
         Map<String,Object> params = new LinkedHashMap<>();
         params.put("uName", name);
+
 
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
@@ -36,6 +48,7 @@ public class InformationAdapter {
 
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         conn.setRequestMethod("POST");
+        conn.setConnectTimeout(timeout);
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         conn.setDoOutput(true);
@@ -45,9 +58,20 @@ public class InformationAdapter {
         for (int c; (c = in.read()) >= 0;)
             sb.append((char)c);
         String response = sb.toString();
-        if(response.contains(name)){
-            logged = true;
+
+        try{
+            JSONObject obj1 = new JSONObject(response);
+            JSONObject obj = obj1.getJSONObject("result");
+            if(name.equals(obj.getString("uName"))){
+
+                logged = pass.equals(obj.get("password"));
+            }
+            else{
+            }
+        }catch (JSONException e){
+
         }
+
         return logged;
     }
 

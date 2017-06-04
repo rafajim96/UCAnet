@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             try {
-                if(inf.login(params[0])){
+                if(inf.login(params[0], params[1])){
                     return "Loggin in";
                 }
                 else{
