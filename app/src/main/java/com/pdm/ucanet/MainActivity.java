@@ -2,8 +2,10 @@ package com.pdm.ucanet;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -13,15 +15,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.pdm.ucanet.concreteEntities.User;
 import com.pdm.ucanet.resourceManagers.InformationAdapter;
+import com.pdm.ucanet.resourceManagers.SessionManager;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     private EditText username;
     private EditText password;
     private TextView message;
     private Button login;
+    private User loggedUser;
+    private SessionManager sessionManager;
     private InformationAdapter inf = new InformationAdapter();
 
     @Override
@@ -35,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editTextPassword);
         message = (TextView) findViewById(R.id.messageText);
         login = (Button) findViewById(R.id.buttonLogin);
+
+
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
             }
             try {
                 if(inf.login(params[0], params[1])){
+                    loggedUser = new User(params[0],params[1]);
+                    sessionManager = new SessionManager(getApplicationContext());
+                    sessionManager.savingSession(loggedUser);
                     return "Loggin in";
                 }
                 else{

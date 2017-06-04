@@ -49,8 +49,6 @@ public class HomeActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, fragment)
                     .commit();
-            fragment.createRecyclerView(courses);
-
 
         }
 
