@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pdm.ucanet.CourseActivity;
 import com.pdm.ucanet.R;
 import com.pdm.ucanet.abstractEntities.Course;
 
@@ -23,11 +24,11 @@ import java.util.ArrayList;
  * Created by Crash on 02/06/2017.
  */
 
-public class StaggeredGridLayoutAdapter extends CustomRecyclerViewAdapter {
+public class CourseCardLayoutAdapter extends CustomRecyclerViewAdapter {
     private Activity activity;
     private final ArrayList<Course> courses;
 
-    public StaggeredGridLayoutAdapter(Activity activity, ArrayList<Course> courses) {
+    public CourseCardLayoutAdapter(Activity activity, ArrayList<Course> courses) {
         this.activity = activity;
         this.courses = courses;
         WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
@@ -49,16 +50,15 @@ public class StaggeredGridLayoutAdapter extends CustomRecyclerViewAdapter {
 
         final ViewHolder myHolder = (ViewHolder) holder;
         myHolder.cItem = courses.get(position);
-        //myHolder.poster.setImageResource(mangas.get(position).getImgId());
         myHolder.courseName.setText(courses.get(position).getCourseName());
 
         myHolder.description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Context context = v.getContext();
-                Intent intent = new Intent(context, MangaDetailActivity.class);
-                intent.putExtra(MangaDetailFragment.ARG_ITEM_ID, ((ViewHolder) holder).mItem.getName());
-                context.startActivity(intent);*/
+                Context context = v.getContext();
+                Intent intent = new Intent(context, CourseActivity.class);
+                intent.putExtra(CourseActivity.CURRENT_COURSE, ((ViewHolder) holder).cItem.getCourseName());
+                context.startActivity(intent);
             }
         });
     }
@@ -74,22 +74,12 @@ public class StaggeredGridLayoutAdapter extends CustomRecyclerViewAdapter {
         public Course cItem;
         public Button description;
 
-        //public ImageView poster;
-        //public TextView title;
-        //private CardView cardView;
-        //public Button description;
-        //public Manga mItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             courseName = (TextView) itemView.findViewById(R.id.course_titulo_text_view);
             description = (Button) itemView.findViewById(R.id.button);
-
-            //poster = (ImageView) itemView.findViewById(R.id.manga_poster_image_view);
-            //title = (TextView) itemView.findViewById(R.id.manga_titulo_text_view);
-            //cardView = (CardView) itemView.findViewById(R.id.cardViewManga);
-
         }
 
 

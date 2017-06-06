@@ -31,6 +31,8 @@ public class User {
         courses.add(a);
         courses.add(b);
         courses.add(c);
+
+
     }
 
     public String getUsername() {

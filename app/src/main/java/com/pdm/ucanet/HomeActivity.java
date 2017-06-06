@@ -1,25 +1,14 @@
 package com.pdm.ucanet;
 
-import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.pdm.ucanet.abstractEntities.Course;
-import com.pdm.ucanet.resourceManagers.StaggeredGridLayoutAdapter;
-
-import java.util.ArrayList;
+import com.pdm.ucanet.resourceManagers.SessionManager;
 
 /**
  * Created by Crash on 26/05/2017.
@@ -29,9 +18,8 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton profileButton;
     private ImageButton homeButton;
     private ImageButton helpButton;
-    private ImageButton LogOffButton;
-    //COURSE ARRALIST FOR TESTING
-    private ArrayList<Course> courses;
+    private ImageButton logOffButton;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         profileButton = (ImageButton) findViewById(R.id.imgProfileButton);
         homeButton = (ImageButton) findViewById(R.id.imgHomeButton);
         helpButton = (ImageButton) findViewById(R.id.imgHelpButton);
+        logOffButton = (ImageButton) findViewById(R.id.imgLogofButton);
 
         if(savedInstanceState == null){
             //SETTING THE HOME FRAGMENT AS DEFAULT
@@ -119,5 +108,68 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        logOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //LOGGING OF THE APP
+                sessionManager = new SessionManager(getApplicationContext());
+                new LongOperation().execute();
+            }
+        });
+    }
+
+
+
+    private class LongOperation extends AsyncTask<String, String, String> {
+        ProgressDialog progDailog = new ProgressDialog(HomeActivity.this);
+
+        @Override
+        protected String doInBackground(String... params) {
+            //CLOSE THE SESSION
+            for (int i = 0; i < 1; i++) {
+                try {
+                    sessionManager = new SessionManager(getApplicationContext());
+                    sessionManager.logOffSession();
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    Thread.interrupted();
+                }
+            }
+            return "Logging off";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //TextView txt = (TextView) findViewById(R.id.output);
+            //txt.setText("Executed"); // txt.setText(result);
+            // might want to change "executed" for the returned string passed
+            // into onPostExecute() but that is upto you
+            super.onPostExecute(result);
+            if (result.equals("Logging off")){
+                try {
+                    progDailog.dismiss();
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    Thread.interrupted();
+                }
+            }
+            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(i);
+            finish();  //Kill the activity from which you will go to next activity
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog.setMessage("Logging Off...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(false);
+            progDailog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {}
     }
 }

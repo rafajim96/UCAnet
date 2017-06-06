@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="0dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/cardViewThread"
+        android:background="@drawable/thread_card_style"
+        card_view:cardUseCompatPadding="true"
+        android:layout_height="100dp">
+
+
+        <TextView
+            android:id="@+id/thread_titulo_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="title Thread"
+            android:layout_gravity="top"
+            android:background="#7F504646"
+            android:textColor="#ffffff"
+            android:shadowColor="#000000"
+            android:shadowRadius="3"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:text="READ"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -1,5 +1,8 @@
 package com.pdm.ucanet.abstractEntities;
 
+import java.lang.*;
+import java.util.ArrayList;
+
 /**
  * Created by frank101m on 5/16/17.
  */
@@ -7,10 +10,12 @@ package com.pdm.ucanet.abstractEntities;
 public class Course {
     private int idCourse;
     private String courseName;
+    private ArrayList<Thread> courseThreads;
 
     public Course(int id, String name){
         this.idCourse = id;
         this.courseName = name;
+        courseThreads = new ArrayList<>();
     }
 
 
@@ -28,5 +33,13 @@ public class Course {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public ArrayList<Thread> getCourseThreads() {
+        return courseThreads;
+    }
+
+    public void setCourseThreads(ArrayList<Thread> courseThreads) {
+        this.courseThreads = courseThreads;
     }
 }

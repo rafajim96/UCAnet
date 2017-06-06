@@ -41,4 +41,11 @@ public class SessionManager {
         editor.putString("MyObject", json);
         editor.apply();
     }
+
+    public void logOffSession(){
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = mPrefs.edit();
+        editor.clear();
+        editor.commit();
+    }
 }
