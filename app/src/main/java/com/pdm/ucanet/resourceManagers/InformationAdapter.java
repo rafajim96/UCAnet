@@ -6,6 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.pdm.ucanet.abstractEntities.Course;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,7 +29,7 @@ import java.util.Map;
 
 public class InformationAdapter {
 
-    private final String loginFile = "https://mapacheproject.xyz/UCAnet/code/login.php";
+    private final String loginFile = "https://mapacheproject.xyz/UCAnet/code/userLogin.php";
     private final int timeout = 5000;
 
 
@@ -34,7 +37,7 @@ public class InformationAdapter {
         boolean logged = false;
         URL url = new URL(loginFile);
         Map<String,Object> params = new LinkedHashMap<>();
-        params.put("uName", name);
+        params.put("user", name);
 
 
         StringBuilder postData = new StringBuilder();
@@ -57,23 +60,30 @@ public class InformationAdapter {
         StringBuilder sb = new StringBuilder();
         for (int c; (c = in.read()) >= 0;)
             sb.append((char)c);
-        String response = sb.toString();
+        String response = sb.toString()+"test";
 
         try{
             JSONObject obj1 = new JSONObject(response);
             JSONObject obj = obj1.getJSONObject("result");
-            if(name.equals(obj.getString("uName"))){
+            Log.d("log1", obj1.getString("result"));
+
+            if(name.equals(obj.getString("userId"))){
+
 
                 logged = pass.equals(obj.get("password"));
             }
             else{
             }
         }catch (JSONException e){
-
+            Log.d("log1", e.getMessage());
         }
 
         return logged;
     }
+
+
+
+
 
 
 }
