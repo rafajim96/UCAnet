@@ -10,17 +10,15 @@ import java.util.Calendar;
  */
 
 public class User {
-    private String firstName, id, restOfTheName;
-    private Calendar birth;
-
-    //TEST ATRIBUTES
+    private String name, career, faculty;
     private String username;
-    private String password;
+
     private ArrayList<Course> courses;
+    private boolean photo = false;
+
 
     public User(String username, String pass){
         this.username = username;
-        this.password = pass;
 
         courses = new ArrayList<>(3);
 
@@ -35,6 +33,39 @@ public class User {
 
     }
 
+    public User(String name, String career, String faculty, String username, ArrayList<Course> courses, boolean photo) {
+        this.name = name;
+        this.career = career;
+        this.faculty = faculty;
+        this.username = username;
+        this.courses = courses;
+        this.photo = photo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCareer() {
+        return career;
+    }
+
+    public void setCareer(String career) {
+        this.career = career;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -43,19 +74,19 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public ArrayList<Course> getCourses() {
         return courses;
     }
 
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
+    }
+
+    public boolean isPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(boolean photo) {
+        this.photo = photo;
     }
 }

@@ -26,8 +26,11 @@ public class ProfileFragment extends Fragment {
         loggedUser = sessionManager.loadSession();
 
         TextView userText = (TextView) view.findViewById(R.id.nameText);
-        userText.setText(loggedUser.getUsername());
-
+        userText.setText(loggedUser.getName());
+        TextView careerText = (TextView) view.findViewById(R.id.textCareer);
+        careerText.setText(loggedUser.getCareer());
+        TextView idText = (TextView) view.findViewById(R.id.textId);
+        idText.setText(loggedUser.getUsername());
         return view;
     }
 }

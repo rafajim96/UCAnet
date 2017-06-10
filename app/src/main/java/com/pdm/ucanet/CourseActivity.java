@@ -60,7 +60,7 @@ public class CourseActivity extends AppCompatActivity {
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
                 //fetchTimelineAsync(0);
-                loadContent();
+                //loadContent();
                 Toast.makeText(getBaseContext(), "Refresh", Toast.LENGTH_SHORT).show();
                 swipeContainer.setRefreshing(false);
             }

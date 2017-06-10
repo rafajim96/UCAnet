@@ -69,9 +69,14 @@ public class MainActivity extends AppCompatActivity{
                     Thread.interrupted();
                 }
             }
+
             try {
-                if(inf.login(params[0], params[1])){
-                    loggedUser = new User(params[0],params[1]);
+                loggedUser = inf.login(params[0], params[1]);
+                if(loggedUser!=null){
+                    //loggedUser = new User(params[0],params[1];
+
+                    //loggedUser = new User(params[0],params[1]);
+
                     sessionManager = new SessionManager(getApplicationContext());
                     sessionManager.savingSession(loggedUser);
                     return "Loggin in";
@@ -89,8 +94,8 @@ public class MainActivity extends AppCompatActivity{
         protected void onPostExecute(String result) {
             //TextView txt = (TextView) findViewById(R.id.output);
             //txt.setText("Executed"); // txt.setText(result);
-            // might want to change "executed" for the returned string passed
-            // into onPostExecute() but that is upto you
+             //might want to change "executed" for the returned string passed
+             //into onPostExecute() but that is upto you
             message = (TextView) findViewById(R.id.messageText);
             super.onPostExecute(result);
             progDailog.dismiss();
