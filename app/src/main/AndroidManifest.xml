@@ -23,6 +23,7 @@
         <activity android:name=".HomeActivity"/>
         <activity android:name=".CourseActivity"/>
         <activity android:name=".ThreadActivity"/>
+        <activity android:name=".PostActivity"/>
 
     </application>
 
