@@ -14,23 +14,14 @@ public class User {
     private String username;
 
     private ArrayList<Course> courses;
+    private ArrayList<String> coursesNames;
     private boolean photo = false;
 
 
     public User(String username, String pass){
         this.username = username;
-
-        courses = new ArrayList<>(3);
-
-        Course a = new Course(1, "mate1");
-        Course b = new Course(2, "turismo");
-        Course c = new Course(3, "analisis");
-
-        courses.add(a);
-        courses.add(b);
-        courses.add(c);
-
-
+        courses = new ArrayList<>();
+        coursesNames = new ArrayList<>();
     }
 
     public User(String name, String career, String faculty, String username, ArrayList<Course> courses, boolean photo) {
@@ -40,6 +31,11 @@ public class User {
         this.username = username;
         this.courses = courses;
         this.photo = photo;
+        this.coursesNames = new ArrayList<>();
+
+        for (Course courseName: courses ) {
+            coursesNames.add(courseName.getCourseName());
+        }
     }
 
     public String getName() {
@@ -88,5 +84,9 @@ public class User {
 
     public void setPhoto(boolean photo) {
         this.photo = photo;
+    }
+
+    public ArrayList<String> getCoursesNames(){
+        return coursesNames;
     }
 }

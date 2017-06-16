@@ -1,10 +1,12 @@
-package com.pdm.ucanet;
+package com.pdm.ucanet.fragmentClasses;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.pdm.ucanet.R;
 
 /**
  * Created by Crash on 28/05/2017.

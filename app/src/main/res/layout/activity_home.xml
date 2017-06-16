@@ -85,7 +85,6 @@
     </ScrollView>
 
 
-
     
     <!-- LOWER BUTTONS LINEAR LAYOUT -->
 
@@ -157,6 +156,5 @@
     </LinearLayout>
 
     <!-- ANIMATION FOR BUTTONS -->
-
 
 </LinearLayout>

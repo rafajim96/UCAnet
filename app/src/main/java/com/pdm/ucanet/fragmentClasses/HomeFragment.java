@@ -1,4 +1,4 @@
-package com.pdm.ucanet;
+package com.pdm.ucanet.fragmentClasses;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pdm.ucanet.R;
 import com.pdm.ucanet.concreteEntities.User;
 import com.pdm.ucanet.resourceManagers.SessionManager;
 import com.pdm.ucanet.resourceManagers.CourseCardLayoutAdapter;

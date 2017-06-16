@@ -1,4 +1,4 @@
-package com.pdm.ucanet;
+package com.pdm.ucanet.fragmentClasses;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pdm.ucanet.R;
 import com.pdm.ucanet.concreteEntities.User;
 import com.pdm.ucanet.resourceManagers.SessionManager;
 

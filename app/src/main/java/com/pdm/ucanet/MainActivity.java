@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity{
     private User loggedUser;
     private SessionManager sessionManager;
     private InformationAdapter inf = new InformationAdapter();
+    private ProgressDialog progDailog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private class LongOperation extends AsyncTask<String, String, String> {
-        ProgressDialog progDailog = new ProgressDialog(MainActivity.this);
+
 
         @Override
         protected String doInBackground(String... params) {
@@ -98,7 +99,10 @@ public class MainActivity extends AppCompatActivity{
              //into onPostExecute() but that is upto you
             message = (TextView) findViewById(R.id.messageText);
             super.onPostExecute(result);
-            progDailog.dismiss();
+            if(progDailog.isShowing()){
+                progDailog.dismiss();
+
+            }
             if (result.equals("Loggin in")){
                 message.setText(result);
                 try {
@@ -111,7 +115,6 @@ public class MainActivity extends AppCompatActivity{
                 finish();  //Kill the activity from which you will go to next activity
                 startActivity(i);
             }else{
-
                 message.setText(result);
             }
 
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progDailog = new ProgressDialog(MainActivity.this);
             progDailog.setMessage("Validating...");
             progDailog.setIndeterminate(false);
             progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -129,6 +133,15 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         protected void onProgressUpdate(String... values) {}
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (progDailog != null) {
+            progDailog.dismiss();
+            progDailog = null;
+        }
     }
 
 

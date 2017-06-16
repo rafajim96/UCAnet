@@ -8,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.pdm.ucanet.fragmentClasses.HelpFragment;
+import com.pdm.ucanet.fragmentClasses.HomeFragment;
+import com.pdm.ucanet.fragmentClasses.ProfileFragment;
+import com.pdm.ucanet.fragmentClasses.ThreadFragment;
 import com.pdm.ucanet.resourceManagers.SessionManager;
 
 /**
@@ -19,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton homeButton;
     private ImageButton helpButton;
     private ImageButton logOffButton;
+    private ImageButton newThreadButton;
     private SessionManager sessionManager;
 
     @Override
@@ -31,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         homeButton = (ImageButton) findViewById(R.id.imgHomeButton);
         helpButton = (ImageButton) findViewById(R.id.imgHelpButton);
         logOffButton = (ImageButton) findViewById(R.id.imgLogofButton);
+        newThreadButton = (ImageButton) findViewById(R.id.imgThreadButton);
 
         if(savedInstanceState == null){
             //SETTING THE HOME FRAGMENT AS DEFAULT
@@ -38,11 +44,7 @@ public class HomeActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, fragment)
                     .commit();
-
         }
-
-
-
 
         //LISTENERS FOR BUTTONS
         profileButton.setOnClickListener(new View.OnClickListener() {
@@ -50,13 +52,15 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //CREATING PROFILE FRAGMENT
                 android.support.v4.app.Fragment f =  getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                if(f != null && !(f instanceof ProfileFragment) && f instanceof HomeFragment){
-                    ProfileFragment fragment = new ProfileFragment();
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                            .replace(R.id.fragmentContainer, fragment)
+                if(f != null && !(f instanceof ProfileFragment) && (f instanceof HomeFragment || f instanceof ThreadFragment)){  //(f != null && f instanceof ProfileFragment) to avoid replacing the same fragment
+                    ProfileFragment fragment = new ProfileFragment();  //CREATING AND INITIALIZING FRAGMENT
+                    getSupportFragmentManager().beginTransaction()  //BEGINNING TRANSACTION TO REPLACE FRAGMENT
+                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)  //ANIMATION FOR THE FRAGMENT, OMIT
+                            .replace(R.id.fragmentContainer, fragment) //R.id.fragmentContainer is a linear-layout with that id on the xml, and the "fragment" to insert
                             .commit();
                 }
+
+
 
                 if(f != null && !(f instanceof ProfileFragment) && f instanceof HelpFragment){
                     ProfileFragment fragment = new ProfileFragment();
@@ -65,7 +69,6 @@ public class HomeActivity extends AppCompatActivity {
                             .replace(R.id.fragmentContainer, fragment)
                             .commit();
                 }
-
             }
         });
 
@@ -81,7 +84,6 @@ public class HomeActivity extends AppCompatActivity {
                             .replace(R.id.fragmentContainer, fragment)
                             .commit();
                 }
-
             }
         });
 
@@ -90,22 +92,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //CREATING HELP FRAGMENT
                 android.support.v4.app.Fragment f =  getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                if(f != null && !(f instanceof HelpFragment) && f instanceof HomeFragment){
+                if(f != null && !(f instanceof HelpFragment) && (f instanceof HomeFragment || f instanceof ProfileFragment || f instanceof ThreadFragment)){
                     HelpFragment fragment = new HelpFragment();
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                             .replace(R.id.fragmentContainer, fragment)
                             .commit();
                 }
-
-                if(f != null && !(f instanceof HelpFragment) && f instanceof ProfileFragment){
-                    HelpFragment fragment = new HelpFragment();
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                            .replace(R.id.fragmentContainer, fragment)
-                            .commit();
-                }
-
             }
         });
 
@@ -115,6 +108,22 @@ public class HomeActivity extends AppCompatActivity {
                 //LOGGING OF THE APP
                 sessionManager = new SessionManager(getApplicationContext());
                 new LongOperation().execute();
+            }
+        });
+
+        newThreadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //CREATING NEW THREAD FRAGMENT
+                android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+                if(f != null && !(f instanceof ThreadFragment)){
+                    ThreadFragment fragment = new ThreadFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                            .replace(R.id.fragmentContainer, fragment)
+                            .commit();
+                }
+
             }
         });
     }
