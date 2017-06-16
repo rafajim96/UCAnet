@@ -58,6 +58,7 @@ public class CourseCardLayoutAdapter extends CustomRecyclerViewAdapter {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, CourseActivity.class);
                 intent.putExtra(CourseActivity.CURRENT_COURSE, ((ViewHolder) holder).cItem.getCourseName());
+                intent.putExtra(CourseActivity.ID, ((ViewHolder) holder).cItem.getIdCourse());
                 context.startActivity(intent);
             }
         });

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.pdm.ucanet.abstractEntities.Course;
+import com.pdm.ucanet.abstractEntities.Thread;
 import com.pdm.ucanet.concreteEntities.User;
 
 import org.json.JSONArray;
@@ -31,56 +32,9 @@ import java.util.Map;
 public class InformationAdapter {
 
     private final String loginFile = "https://mapacheproject.xyz/UCAnet/code/userLogin.php";
+    private final String threadFile = "https://mapacheproject.xyz/UCAnet/code/loadThreads.php";
     private final int timeout = 5000;
 
-
-   /* public boolean login(String name, String pass) throws IOException {
-        boolean logged = false;
-        URL url = new URL(loginFile);
-        Map<String,Object> params = new LinkedHashMap<>();
-        params.put("user", name);
-
-
-        StringBuilder postData = new StringBuilder();
-        for (Map.Entry<String,Object> param : params.entrySet()) {
-            if (postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-            postData.append('=');
-            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-        }
-        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
-
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setConnectTimeout(timeout);
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-        conn.setDoOutput(true);
-        conn.getOutputStream().write(postDataBytes);
-        Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        for (int c; (c = in.read()) >= 0;)
-            sb.append((char)c);
-        String response = sb.toString()+"test";
-
-        try{
-            JSONObject obj1 = new JSONObject(response);
-            JSONObject obj = obj1.getJSONObject("result");
-            Log.d("log1", obj1.getString("result"));
-
-            if(name.equals(obj.getString("userId"))){
-
-
-                logged = pass.equals(obj.get("password"));
-            }
-            else{
-            }
-        }catch (JSONException e){
-            Log.d("log1", e.getMessage());
-        }
-
-        return logged;
-    }*/
    public User login(String name, String pass) throws IOException {
        boolean logged = false;
        URL url = new URL(loginFile);
@@ -115,7 +69,8 @@ public class InformationAdapter {
            JSONObject objUserInfo = obj1.getJSONObject("userInfo");
            JSONObject objFaculty = obj1.getJSONObject("facultyInfo");
            JSONObject objCareer = obj1.getJSONObject("careerInfo");
-           JSONObject objN = obj1.getJSONObject("courseNumber");
+           //JSONObject objN = obj1.getJSONObject("courseNumber");
+           //change what JSON returns (remove number)
 
 
            Log.d("log1", obj1.getString("userInfo"));
@@ -127,27 +82,10 @@ public class InformationAdapter {
                logged = pass.equals(objUserInfo.get("password"));
                if(logged){
                     ArrayList<Course> courses = new ArrayList<>();
-                   /*switch (objN.getInt("courseNumber")){
-                       case 1:
-                           courses.add(new Course(0, obj1.getJSONObject()))
-                           break;
-                       case 2:
-                           break;
-                       case 3:
-                           break;
-                       case 4:
-                           break;
-                       case 5:
-                           break;
-                       case 6:
-                           break;
-                       case 7:
-                           break;
-                   }*/
-
                    JSONArray c = obj1.getJSONArray("courses");
                    for(int i = 0; i < c.length(); i++){
-                       courses.add(new Course(i, c.getJSONObject(i).getString("courses")));
+                       //courses.add(new Course(i, c.getJSONObject(i).getString("courses")));
+                       courses.add(new Course(c.getJSONObject(i).getInt("courseId"), c.getJSONObject(i).getString("courses")));
                    }
                    User u = new User(objUserInfo.getString("uName"), objCareer.getString("career"), objFaculty.getString("faculty"), objUserInfo.getString("userId"), courses, (objUserInfo.getString("photo")!=null));
                    return u;
@@ -162,6 +100,48 @@ public class InformationAdapter {
        return null;
    }
 
+   public ArrayList<Thread> loadThreads(int courseId) throws  IOException{
+       URL url = new URL(threadFile);
+       Map<String,Object> params = new LinkedHashMap<>();
+       params.put("courseId", courseId);
+
+
+       StringBuilder postData = new StringBuilder();
+       for (Map.Entry<String,Object> param : params.entrySet()) {
+           if (postData.length() != 0) postData.append('&');
+           postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+           postData.append('=');
+           postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+       }
+       byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+       HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+       conn.setRequestMethod("POST");
+       conn.setConnectTimeout(timeout);
+       conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+       conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+       conn.setDoOutput(true);
+       conn.getOutputStream().write(postDataBytes);
+       Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+       StringBuilder sb = new StringBuilder();
+       for (int c; (c = in.read()) >= 0;)
+           sb.append((char)c);
+       String response = sb.toString();
+        Log.d("threadsGetter", response);
+       try{
+           JSONArray threadInfoArray = new JSONArray(response);
+           ArrayList<Thread> threads = new ArrayList<>();
+           for(int i = 0; i< threadInfoArray.length(); i++){
+               threads.add(new Thread(threadInfoArray.getJSONObject(i).getInt("threadId"), threadInfoArray.getJSONObject(i).getString("title")));
+           }
+           Log.d("threadsGetter", threads.get(0).getTitle());
+           return threads;
+
+       }catch(JSONException e){
+           Log.d("threadsGetter", e.getMessage());
+       }
+        return null;
+   }
 }
 
 

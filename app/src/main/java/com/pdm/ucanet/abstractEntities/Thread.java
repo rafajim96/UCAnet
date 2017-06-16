@@ -7,10 +7,12 @@ import java.util.ArrayList;
  */
 
 public class Thread {
+    private int id;
     private String title;
     private ArrayList<Post> posts;
 
-    public Thread(String name){
+    public Thread(int id, String name){
+        this.id = id;
         this.title = name;
         //CREATE ARRAYLIST OF POSTS
     }
@@ -29,5 +31,13 @@ public class Thread {
 
     public void setPosts(ArrayList<Post> posts) {
         this.posts = posts;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

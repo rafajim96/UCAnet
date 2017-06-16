@@ -70,7 +70,7 @@ public class ThreadActivity extends AppCompatActivity {
     private void loadContent(){
         //LOAD THREADS FROM DATABASE
         //CREATING COURSE WITH THREADS FOR TESTING
-        currentThread = new Thread(threadName);
+        currentThread = new Thread(1, threadName);
         ArrayList<Post> posts = new ArrayList<>();
         posts.add(new Post("dhfkjlsadfjklsadhflksjdhflskdajfhsadlkjfhsaddfjklsdhfuiwecronweriuyeotivuyertuoireynvwtoiuweryntoieruvyntogsadkjashgdkasjhdgasjkhdgsyaduweigduyweybewcuyrtbewuycrbwteuyrcxbtweuiyrtewuiycrbwteuircbtweiurcbtweiurcbytewcriuycbwtweiuyrctbweiuyrcbtweiuyrcbwetryuwebreuyrbcwetyurcibwetrcuiwebtcyrwiwteyurcbtweruycebwtiuybteriuvyntreoiutynreoitvnuretvoiumgjkgjhkg"));
         posts.add(new Post("dhfkryntoieruvyntoeriuvyntreoiutynreoitvnuretvoiumgjkgjhkg"));
