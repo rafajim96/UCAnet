@@ -43,15 +43,16 @@
         android:id="@+id/editContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginBottom="16dp"
+        android:layout_weight="2"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Content:"/>
+        android:hint="Content:"
+        android:inputType="textMultiLine" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:padding="16dp"
         android:layout_marginBottom="16dp"
@@ -72,14 +73,16 @@
             <Button
                 android:id="@+id/buttonUploadImage"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="Upload image" />
 
             <Button
                 android:id="@+id/buttonSaveThread"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="Post Thread" />
         </LinearLayout>
