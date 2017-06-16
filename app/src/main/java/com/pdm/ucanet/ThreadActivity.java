@@ -1,11 +1,14 @@
 package com.pdm.ucanet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ public class ThreadActivity extends AppCompatActivity {
     private String threadName;
     private Thread currentThread;
     private SwipeRefreshLayout swipeContainer;
+    private Button postButton;
 
     private RecyclerView recyclerView;
     private SessionManager sessionManager;
@@ -41,6 +45,7 @@ public class ThreadActivity extends AppCompatActivity {
 
         threadText = (TextView) findViewById(R.id.threadTextView);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        postButton = (Button) findViewById(R.id.buttonPost);
 
         //SETTING THE CURRENT COURSE NAME
         threadName = getIntent().getExtras().getString(CURRENT_THREAD);
@@ -51,6 +56,17 @@ public class ThreadActivity extends AppCompatActivity {
         loggedUser = sessionManager.loadSession();
 
         loadContent();
+
+        //SETTING LISTENERS FOR BUTTONS
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //NEW POST
+                Intent intent = new Intent(getBaseContext(), PostActivity.class);
+                intent.putExtra("THREAD_NAME", threadName);
+                startActivity(intent);
+            }
+        });
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
