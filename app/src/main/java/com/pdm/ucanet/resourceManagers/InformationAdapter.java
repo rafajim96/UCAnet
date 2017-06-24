@@ -85,7 +85,7 @@ public class InformationAdapter {
 
                logged = pass.equals(objUserInfo.get("password"));
                if(logged){
-                    ArrayList<Course> courses = new ArrayList<>();
+                   ArrayList<Course> courses = new ArrayList<>();
                    JSONArray c = obj1.getJSONArray("courses");
                    for(int i = 0; i < c.length(); i++){
                        //courses.add(new Course(i, c.getJSONObject(i).getString("courses")));

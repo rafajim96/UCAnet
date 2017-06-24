@@ -130,19 +130,9 @@ public class MainActivity extends AppCompatActivity{
             progDailog.setCancelable(true);
             progDailog.show();
         }
-
-        @Override
-        protected void onProgressUpdate(String... values) {}
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (progDailog != null) {
-            progDailog.dismiss();
-            progDailog = null;
-        }
-    }
+
 
 
 }

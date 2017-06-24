@@ -27,6 +27,7 @@ import com.pdm.ucanet.R;
 import com.pdm.ucanet.ThreadActivity;
 import com.pdm.ucanet.abstractEntities.Post;
 import com.pdm.ucanet.abstractEntities.Thread;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -59,17 +60,39 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         flowTextView = (FlowTextView) view.findViewById(R.id.ftv);
         imageButton = (ImageButton) view.findViewById(R.id.thumb_button_1);
 
+        return new PostCardLayoutAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final CustomRecycleViewHolder holder, final int position) {
+        final PostCardLayoutAdapter.ViewHolder myHolder = (PostCardLayoutAdapter.ViewHolder) holder;
+
+        myHolder.pItem = posts.get(position);
+        flowTextView.setText(myHolder.pItem.getContent());
+        myHolder.userPost.setText(posts.get(position).getUserName());
+        myHolder.userIdPost.setText(posts.get(position).getUser());
+        myHolder.creationPost.setText(posts.get(position).getDate());
+        Log.d("visibilityImage", String.valueOf(myHolder.pItem.isImgFlag()));
+
+        Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+posts.get(position).getImageName()).into(myHolder.imgButton);
 
 
+        if(!myHolder.pItem.isImgFlag()){
+            imageButton.setVisibility(View.GONE);
+        }
+        else{
+            Log.d("visibilityImage", myHolder.pItem.getImageName());
+
+        }
 
 
-        // Hook up clicks on the thumbnail views.
-        final View thumb1View = view.findViewById(R.id.thumb_button_1);
-        thumb1View.setOnClickListener(new View.OnClickListener() {
+        myHolder.imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageButton stuff = (ImageButton) view.findViewById(R.id.thumb_button_1);
-                stuff.setTag(R.mipmap.ic_launcher);
+                //ImageButton stuff = (ImageButton) view.findViewById(R.id.thumb_button_1);
+                //stuff.setTag(R.mipmap.ic_launcher);
+
+
 
                 LayoutInflater inflater = activity.getLayoutInflater();
                 View imageDialog = inflater.inflate(R.layout.dialog_image, null);
@@ -81,43 +104,11 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
                 ImageView imgImage = (ImageView) imageDialog.findViewById(R.id.imgImage);
-                imgImage.setImageResource(R.drawable.ucalogos);
+                Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+posts.get(position).getImageName()).into(imgImage);
 
                 dialog.show();
             }
         });
-
-
-        return new PostCardLayoutAdapter.ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(final CustomRecycleViewHolder holder, final int position) {
-
-
-        final PostCardLayoutAdapter.ViewHolder myHolder = (PostCardLayoutAdapter.ViewHolder) holder;
-        myHolder.pItem = posts.get(position);
-        flowTextView.setText(myHolder.pItem.getContent());
-        Log.d("visibilityImage", String.valueOf(myHolder.pItem.isImgFlag()));
-        if(!myHolder.pItem.isImgFlag()){
-            imageButton.setVisibility(View.GONE);
-        }
-        else{
-            Log.d("visibilityImage", myHolder.pItem.getImageName());
-
-        }
-        //myHolder.postName.setText(posts.get(position).getTitle());
-
-        /*myHolder.description.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, CourseActivity.class);
-                intent.putExtra(CourseActivity.CURRENT_COURSE, ((CourseCardLayoutAdapter.ViewHolder) holder).cItem.getCourseName());
-                context.startActivity(intent);
-            }
-        });*/
-
     }
 
     @Override
@@ -125,18 +116,25 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         return posts.size();
     }
 
-    public class ViewHolder extends CustomRecycleViewHolder {
-        public final View mView;
-        public TextView postContent;
-        public Post pItem;
+    private class ViewHolder extends CustomRecycleViewHolder {
+        private final View mView;
+        private TextView userPost;
+        private TextView userIdPost;
+        private TextView creationPost;
+        private Post pItem;
+        private ImageButton imgButton;
+
         //public Button description;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            //postContent = (TextView) itemView.findViewById(R.id.post_titulo_text_view);
-            //description = (Button) itemView.findViewById(R.id.button);
+            userPost = (TextView) itemView.findViewById(R.id.userPostText);
+            userIdPost = (TextView) itemView.findViewById(R.id.userIdPostText);
+            creationPost = (TextView) itemView.findViewById(R.id.creationPostText);
+            imgButton = (ImageButton) itemView.findViewById(R.id.thumb_button_1);
+
         }
     }
 }

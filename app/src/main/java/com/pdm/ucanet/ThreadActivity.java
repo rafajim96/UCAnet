@@ -94,18 +94,6 @@ public class ThreadActivity extends AppCompatActivity {
 
     private void loadContent(){
         //LOAD THREADS FROM DATABASE
-        //CREATING COURSE WITH THREADS FOR TESTING
-        /*currentThread = new Thread(1, threadName);
-        ArrayList<Post> posts = new ArrayList<>();
-        posts.add(new Post("dhfkjlsadfjklsadhflksjdhflskdajfhsadlkjfhsaddfjklsdhfuiwecronweriuyeotivuyertuoireynvwtoiuweryntoieruvyntogsadkjashgdkasjhdgasjkhdgsyaduweigduyweybewcuyrtbewuycrbwteuyrcxbtweuiyrtewuiycrbwteuircbtweiurcbtweiurcbytewcriuycbwtweiuyrctbweiuyrcbtweiuyrcbwetryuwebreuyrbcwetyurcibwetrcuiwebtcyrwiwteyurcbtweruycebwtiuybteriuvyntreoiutynreoitvnuretvoiumgjkgjhkg"));
-        posts.add(new Post("dhfkryntoieruvyntoeriuvyntreoiutynreoitvnuretvoiumgjkgjhkg"));
-        posts.add(new Post("dhfkjlsadfjklsadhflksjdhflskdajfhsadlkjfhsaddfjklsdhfuiwecronweriuyeotivuyertuoireynvyntreoiutynreoitvnuretvoiumgjkgjhkg"));
-        currentThread.setPosts(posts);
-
-        recyclerView.setHasFixedSize(true);
-        StaggeredGridLayoutManager straggLayoutManager = new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(straggLayoutManager);
-        recyclerView.setAdapter(new PostCardLayoutAdapter(this, currentThread.getPosts()));*/
         currentThread = new Thread(threadId, threadName);
         new loadPosts().execute("go");
     }
@@ -120,7 +108,6 @@ public class ThreadActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             //CHECK IF THE DATA OF THE LOGIN IS CORRECT
             try {
-
                 posts = info.loadPosts(currentThread.getId());
                 return "did";
             }catch(IOException e){

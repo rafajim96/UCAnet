@@ -31,6 +31,7 @@ public class PostActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         loggedUser = sessionManager.loadSession();
         textThreadName = (TextView) findViewById(R.id.textThreadName);
+        savePostButton = (Button) findViewById(R.id.buttonSavePost);
 
         textThreadName.setText(threadName);
 
