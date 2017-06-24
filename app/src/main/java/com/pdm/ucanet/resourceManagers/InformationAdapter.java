@@ -138,13 +138,12 @@ public class InformationAdapter {
            for(int i = 0; i< threadInfoArray.length(); i++){
                threads.add(new Thread(threadInfoArray.getJSONObject(i).getInt("threadId"), threadInfoArray.getJSONObject(i).getString("title")));
            }
-           Log.d("threadsGetter", threads.get(0).getTitle());
            return threads;
 
        }catch(JSONException e){
            Log.d("threadsGetter", e.getMessage());
        }
-        return null;
+        return new ArrayList<>();
    }
 
    public ArrayList<Post> loadPosts(int threadId) throws IOException{
@@ -194,7 +193,7 @@ public class InformationAdapter {
        }catch(JSONException e){
            Log.d("postLoad", e.getMessage());
        }
-       return null;
+       return new ArrayList<>();
    }
 
 
