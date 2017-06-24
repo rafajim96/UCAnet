@@ -183,7 +183,7 @@ public class InformationAdapter {
                        postsJSONArray.getJSONObject(i).getString("content"),
                        postsJSONArray.getJSONObject(i).getString("creation"),
                        postsJSONArray.getJSONObject(i).getString("userId"),
-                       postsJSONArray.getJSONObject(i).getString("image")!=null,
+                       postsJSONArray.getJSONObject(i).getInt("image")==1,
                        postsJSONArray.getJSONObject(i).getString("op")!=null,
                        postsJSONArray.getJSONObject(i).getString("uName")));
            }

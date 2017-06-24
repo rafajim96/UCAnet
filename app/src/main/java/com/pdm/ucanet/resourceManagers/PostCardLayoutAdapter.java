@@ -99,7 +99,7 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         myHolder.pItem = posts.get(position);
         flowTextView.setText(myHolder.pItem.getContent());
         Log.d("visibilityImage", String.valueOf(myHolder.pItem.isImgFlag()));
-        if(myHolder.pItem.isImgFlag()){
+        if(!myHolder.pItem.isImgFlag()){
             imageButton.setVisibility(View.GONE);
         }
         //myHolder.postName.setText(posts.get(position).getTitle());
