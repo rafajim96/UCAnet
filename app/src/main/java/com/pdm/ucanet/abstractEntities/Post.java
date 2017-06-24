@@ -6,7 +6,7 @@ package com.pdm.ucanet.abstractEntities;
 
 public class Post {
     private int id;
-    private String content, date, user, userName;
+    private String content, date, user, userName, imageName;
     private boolean imgFlag, op;
 
 
@@ -14,7 +14,7 @@ public class Post {
         this.content = content;
     }
 
-    public Post(int id, String content, String date, String user, boolean imgFlag, boolean op, String userName) {
+    public Post(int id, String content, String date, String user, boolean imgFlag, boolean op, String userName, String imageName) {
         this.id = id;
         this.content = content;
         this.date = date;
@@ -22,6 +22,7 @@ public class Post {
         this.imgFlag = imgFlag;
         this.op = op;
         this.userName = userName;
+        this.imageName = imageName;
     }
 
     public int getId() {
@@ -81,5 +82,13 @@ public class Post {
         this.op = op;
 
 
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

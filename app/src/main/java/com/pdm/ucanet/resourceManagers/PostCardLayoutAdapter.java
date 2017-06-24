@@ -102,6 +102,10 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         if(!myHolder.pItem.isImgFlag()){
             imageButton.setVisibility(View.GONE);
         }
+        else{
+            Log.d("visibilityImage", myHolder.pItem.getImageName());
+
+        }
         //myHolder.postName.setText(posts.get(position).getTitle());
 
         /*myHolder.description.setOnClickListener(new View.OnClickListener() {
