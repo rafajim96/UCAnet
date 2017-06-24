@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.pdm.ucanet.abstractEntities.Course;
+import com.pdm.ucanet.abstractEntities.Post;
 import com.pdm.ucanet.abstractEntities.Thread;
 import com.pdm.ucanet.concreteEntities.User;
 
@@ -18,7 +19,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class InformationAdapter {
 
     private final String loginFile = "https://mapacheproject.xyz/UCAnet/code/userLogin.php";
     private final String threadFile = "https://mapacheproject.xyz/UCAnet/code/loadThreads.php";
+    private final String postFile = "https://mapacheproject.xyz/UCAnet/code/loadPosts.php";
     private final int timeout = 5000;
 
    public User login(String name, String pass) throws IOException {
@@ -142,6 +146,57 @@ public class InformationAdapter {
        }
         return null;
    }
+
+   public ArrayList<Post> loadPosts(int threadId) throws IOException{
+       URL url = new URL(postFile);
+       Map<String,Object> params = new LinkedHashMap<>();
+       params.put("threadId", threadId);
+
+
+       StringBuilder postData = new StringBuilder();
+       for (Map.Entry<String,Object> param : params.entrySet()) {
+           if (postData.length() != 0) postData.append('&');
+           postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+           postData.append('=');
+           postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+       }
+       byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+       HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+       conn.setRequestMethod("POST");
+       conn.setConnectTimeout(timeout);
+       conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+       conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+       conn.setDoOutput(true);
+       conn.getOutputStream().write(postDataBytes);
+       Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+       StringBuilder sb = new StringBuilder();
+       for (int c; (c = in.read()) >= 0;)
+           sb.append((char)c);
+       String response = sb.toString();
+       Log.d("postsLoad", response);
+       try{
+           JSONArray postsJSONArray = new JSONArray(response);
+           ArrayList<Post> posts = new ArrayList<>();
+           for(int i = 0; i< postsJSONArray.length(); i++){
+               posts.add(new Post(postsJSONArray.getJSONObject(i).getInt("postId"),
+                       postsJSONArray.getJSONObject(i).getString("content"),
+                       postsJSONArray.getJSONObject(i).getString("creation"),
+                       postsJSONArray.getJSONObject(i).getString("userId"),
+                       postsJSONArray.getJSONObject(i).getString("image")!=null,
+                       postsJSONArray.getJSONObject(i).getString("op")!=null,
+                       postsJSONArray.getJSONObject(i).getString("uName")));
+           }
+
+           return posts;
+
+       }catch(JSONException e){
+           Log.d("postLoad", e.getMessage());
+       }
+       return null;
+   }
+
+
 }
 
 

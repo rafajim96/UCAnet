@@ -58,6 +58,7 @@ public class ThreadCardLayoutAdapter extends CustomRecyclerViewAdapter {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, ThreadActivity.class);
                 intent.putExtra(ThreadActivity.CURRENT_THREAD, ((ThreadCardLayoutAdapter.ViewHolder) holder).tItem.getTitle());
+                intent.putExtra(ThreadActivity.THREAD_ID, ((ThreadCardLayoutAdapter.ViewHolder) holder).tItem.getId());
                 context.startActivity(intent);
             }
         });

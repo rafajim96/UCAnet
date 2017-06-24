@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
     private Activity activity;
     private final ArrayList<Post> posts;
     private FlowTextView flowTextView;
+    private ImageButton imageButton;
 
 
     public PostCardLayoutAdapter(Activity activity, ArrayList<Post> posts) {
@@ -55,6 +57,7 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         View view = LayoutInflater.from(activity)
                 .inflate(R.layout.post_detail_cardview, parent, false);
         flowTextView = (FlowTextView) view.findViewById(R.id.ftv);
+        imageButton = (ImageButton) view.findViewById(R.id.thumb_button_1);
 
 
 
@@ -95,6 +98,10 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         final PostCardLayoutAdapter.ViewHolder myHolder = (PostCardLayoutAdapter.ViewHolder) holder;
         myHolder.pItem = posts.get(position);
         flowTextView.setText(myHolder.pItem.getContent());
+        Log.d("visibilityImage", String.valueOf(myHolder.pItem.isImgFlag()));
+        if(myHolder.pItem.isImgFlag()){
+            imageButton.setVisibility(View.GONE);
+        }
         //myHolder.postName.setText(posts.get(position).getTitle());
 
         /*myHolder.description.setOnClickListener(new View.OnClickListener() {

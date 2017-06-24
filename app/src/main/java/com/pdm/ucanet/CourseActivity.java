@@ -83,32 +83,7 @@ public class CourseActivity extends AppCompatActivity{
         currentCourse = new Course(courseId, courseName);
         new LoadThreads().execute("go");
 
-        //try {
-            //ArrayList<Thread> threads = info.loadTheads(courseId);
-            //currentCourse.setCourseThreads(threads);
-            /*LoadThreads tl = new LoadThreads();
 
-            ArrayList<Thread> threads = new LoadThreads().execute("go");
-            Toast.makeText(this, threads.get(0).getTitle(), Toast.LENGTH_SHORT).show();
-            currentCourse.setCourseThreads(threads);
-            recyclerView.setHasFixedSize(true);
-            StaggeredGridLayoutManager straggLayoutManager = new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
-            recyclerView.setLayoutManager(straggLayoutManager);
-            recyclerView.setAdapter(new ThreadCardLayoutAdapter(this, currentCourse.getCourseThreads()));
-        }catch(Exception e){
-            //Toast.makeText(this, "No se pudieron obtener los hilos 1", Toast.LENGTH_SHORT).show();
-
-        }*/
-        /*ArrayList<Thread> testThreads = new ArrayList<>();
-        testThreads.add(new Thread(1, "Como se hace esta integral?"));
-        testThreads.add(new Thread(1, "Hay clases?"));
-        testThreads.add(new Thread(1, "Cuando es el parcial?"));
-        currentCourse.setCourseThreads(testThreads);
-
-        recyclerView.setHasFixedSize(true);
-        StaggeredGridLayoutManager straggLayoutManager = new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(straggLayoutManager);
-        recyclerView.setAdapter(new ThreadCardLayoutAdapter(this, currentCourse.getCourseThreads()));*/
     }
 
 
