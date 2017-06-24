@@ -37,7 +37,8 @@ public class InformationAdapter {
     private final String loginFile = "https://mapacheproject.xyz/UCAnet/code/userLogin.php";
     private final String threadFile = "https://mapacheproject.xyz/UCAnet/code/loadThreads.php";
     private final String postFile = "https://mapacheproject.xyz/UCAnet/code/loadPosts.php";
-    private final String inserPostFile = "https://mapacheproject.xyz/UCAnet/code/insertPost.php";
+    private final String insertPostFile = "https://mapacheproject.xyz/UCAnet/code/insertPost.php";
+    private final String insertThreadFile = "https://mapacheproject.xyz/UCAnet/code/insertThread.php";
     private final int timeout = 5000;
 
    public User login(String name, String pass) throws IOException {
@@ -198,7 +199,7 @@ public class InformationAdapter {
    }
 
    public boolean insertPost(int threadId, String content, String userId, int image, String imageName) throws IOException{
-       URL url = new URL(inserPostFile);
+       URL url = new URL(insertPostFile);
        Map<String,Object> params = new LinkedHashMap<>();
        params.put("threadId", threadId);
        params.put("content", content);
@@ -239,6 +240,50 @@ public class InformationAdapter {
 
        return false;
    }
+
+    public boolean insertThread(String title, int courseId, String content, String userId, int image, String imageName) throws IOException{
+        URL url = new URL(insertThreadFile);
+        Map<String,Object> params = new LinkedHashMap<>();
+        params.put("title", title);
+        params.put("courseId", courseId);
+        params.put("content", content);
+        params.put("userId", userId);
+        params.put("image", image);
+        params.put("imageName", imageName);
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String,Object> param : params.entrySet()) {
+            if (postData.length() != 0) postData.append('&');
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+        }
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setConnectTimeout(timeout);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
+        conn.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        for (int c; (c = in.read()) >= 0;)
+            sb.append((char)c);
+        String response = sb.toString();
+        Log.d("postsLoad", response);
+        try{
+            JSONObject obj = new JSONObject(response);
+            if(obj.getInt("status")==1){
+                return true;
+            }
+        }
+        catch (Exception e){
+            Log.d("errorJsonPost", e.getMessage().toString());
+        }
+
+        return false;
+    }
 
 
 }

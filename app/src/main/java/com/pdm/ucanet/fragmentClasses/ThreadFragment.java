@@ -1,5 +1,7 @@
 package com.pdm.ucanet.fragmentClasses;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,8 +20,10 @@ import com.pdm.ucanet.R;
 import com.pdm.ucanet.abstractEntities.Course;
 import com.pdm.ucanet.concreteEntities.User;
 import com.pdm.ucanet.resourceManagers.CourseCardLayoutAdapter;
+import com.pdm.ucanet.resourceManagers.InformationAdapter;
 import com.pdm.ucanet.resourceManagers.SessionManager;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -35,9 +39,11 @@ public class ThreadFragment extends Fragment {
     private Button uploadImage;
     private Button saveThread;
     private ArrayAdapter<String> dataAdapter;
-
+    InformationAdapter info = new InformationAdapter();
     private SessionManager sessionManager;
     private User loggedUser;
+    String title, content;
+    int courseId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +79,16 @@ public class ThreadFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //SAVE THREAD
+                title = titleEdit.getText().toString();
+                content = contentEdit.getText().toString();
+                for(Course c : loggedUser.getCourses()){
+                    if(c.getCourseName().equals(coursesSpinner.getSelectedItem().toString())){
+                        courseId = c.getIdCourse();
+                        break;
+                    }
+                }
 
+                new insertThread().execute("go");
 
             }
         });
@@ -84,4 +99,47 @@ public class ThreadFragment extends Fragment {
 
         return view;
     }
+
+    private class insertThread extends AsyncTask<String, String, String> {
+        private ProgressDialog progDailog;
+
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            //CHECK IF THE DATA OF THE LOGIN IS CORRECT
+            try {
+                //de momento imagen es cero y null
+                info.insertThread(title, courseId, content, loggedUser.getUsername(), 0, null);
+                return "did";
+            }catch(IOException e){
+
+            }
+            return "didnt";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progDailog.dismiss();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog = new ProgressDialog(getContext());
+            progDailog.setMessage("Inserting data...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {}
+
+    }
+
+
+
 }
