@@ -86,7 +86,6 @@ public class ThreadActivity extends AppCompatActivity {
                 // once the network request has completed successfully.
                 //fetchTimelineAsync(0);
                 loadContent();
-                Toast.makeText(getBaseContext(), "Refresh", Toast.LENGTH_SHORT).show();
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -146,5 +145,11 @@ public class ThreadActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {}
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadContent();
     }
 }

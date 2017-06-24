@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,11 +70,12 @@ public class CourseCardLayoutAdapter extends CustomRecyclerViewAdapter {
         return courses.size();
     }
 
-    public class ViewHolder extends CustomRecycleViewHolder {
-        public final View mView;
-        public TextView courseName;
-        public Course cItem;
-        public Button description;
+    private class ViewHolder extends CustomRecycleViewHolder {
+        private final View mView;
+        private TextView courseName;
+        private Course cItem;
+        private Button description;
+        //private ImageView
 
 
         public ViewHolder(View itemView) {

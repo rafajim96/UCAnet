@@ -2,6 +2,7 @@ package com.pdm.ucanet.fragmentClasses;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -39,11 +40,11 @@ public class ThreadFragment extends Fragment {
     private Button uploadImage;
     private Button saveThread;
     private ArrayAdapter<String> dataAdapter;
-    InformationAdapter info = new InformationAdapter();
+    private InformationAdapter info = new InformationAdapter();
     private SessionManager sessionManager;
     private User loggedUser;
-    String title, content;
-    int courseId;
+    private String title, content;
+    private int courseId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +90,8 @@ public class ThreadFragment extends Fragment {
                 }
 
                 new insertThread().execute("go");
+                titleEdit.setText("");
+                contentEdit.setText("");
 
             }
         });
@@ -121,6 +124,7 @@ public class ThreadFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             progDailog.dismiss();
+            Snackbar.make(getActivity().findViewById(R.id.threadLayout), "Thread added", Snackbar.LENGTH_LONG).show();
 
         }
 
@@ -139,7 +143,6 @@ public class ThreadFragment extends Fragment {
         protected void onProgressUpdate(String... values) {}
 
     }
-
 
 
 }

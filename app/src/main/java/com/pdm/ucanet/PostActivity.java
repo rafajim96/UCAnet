@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -30,8 +31,8 @@ public class PostActivity extends AppCompatActivity {
     private TextView textThreadName;
     private Button savePostButton;
     private InformationAdapter info = new InformationAdapter();
-    EditText content;
-    String contentS;
+    private EditText content;
+    private String contentS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +56,11 @@ public class PostActivity extends AppCompatActivity {
                 contentS = content.getText().toString();
                 try {
                     new insert().execute("go");
-                    Toast.makeText(PostActivity.this, "Si se inserto", Toast.LENGTH_SHORT).show();
+                    content.setText("");
+                    //Toast.makeText(PostActivity.this, "Si se inserto", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(PostActivity.this, "No se inserto", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(PostActivity.this, "No se inserto", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -89,7 +91,7 @@ public class PostActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             progDailog.dismiss();
-
+            Snackbar.make(findViewById(R.id.postLayout), "Post added", Snackbar.LENGTH_LONG).show();
         }
 
         @Override
