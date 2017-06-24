@@ -1,14 +1,22 @@
 package com.pdm.ucanet;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pdm.ucanet.concreteEntities.User;
+import com.pdm.ucanet.resourceManagers.InformationAdapter;
 import com.pdm.ucanet.resourceManagers.SessionManager;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Crash on 15/06/2017.
@@ -16,11 +24,14 @@ import com.pdm.ucanet.resourceManagers.SessionManager;
 
 public class PostActivity extends AppCompatActivity {
     private String threadName;
+    private int threadId;
     private SessionManager sessionManager;
     private User loggedUser;
     private TextView textThreadName;
     private Button savePostButton;
-
+    private InformationAdapter info = new InformationAdapter();
+    EditText content;
+    String contentS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +39,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         threadName = getIntent().getStringExtra("THREAD_NAME");
+        threadId = getIntent().getIntExtra("threadId", 0);
         sessionManager = new SessionManager(this);
         loggedUser = sessionManager.loadSession();
         textThreadName = (TextView) findViewById(R.id.textThreadName);
@@ -39,13 +51,64 @@ public class PostActivity extends AppCompatActivity {
         savePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //SAVE NEW POST
+                content = (EditText) findViewById(R.id.editText);
+                contentS = content.getText().toString();
+                try {
+                    new insert().execute("go");
+                    Toast.makeText(PostActivity.this, "Si se inserto", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(PostActivity.this, "No se inserto", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
 
 
     }
+
+    private class insert extends AsyncTask<String, String, String> {
+        private ProgressDialog progDailog;
+
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            //CHECK IF THE DATA OF THE LOGIN IS CORRECT
+            try {
+                //de momento imagen es cero y null
+                info.insertPost(threadId, contentS, loggedUser.getUsername(),
+                        0, null);
+                return "did";
+            }catch(IOException e){
+
+            }
+            return "didnt";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progDailog.dismiss();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog = new ProgressDialog(PostActivity.this);
+            progDailog.setMessage("Inserting data...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {}
+
+    }
+
+
 
 
 }

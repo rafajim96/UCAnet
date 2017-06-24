@@ -73,6 +73,7 @@ public class ThreadActivity extends AppCompatActivity {
                 //NEW POST
                 Intent intent = new Intent(getBaseContext(), PostActivity.class);
                 intent.putExtra("THREAD_NAME", threadName);
+                intent.putExtra("threadId", threadId);
                 startActivity(intent);
             }
         });
