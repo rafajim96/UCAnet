@@ -2,13 +2,21 @@ package com.pdm.ucanet;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +24,13 @@ import com.pdm.ucanet.concreteEntities.User;
 import com.pdm.ucanet.resourceManagers.InformationAdapter;
 import com.pdm.ucanet.resourceManagers.SessionManager;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Crash on 15/06/2017.
@@ -28,27 +41,35 @@ public class PostActivity extends AppCompatActivity {
     private int threadId;
     private SessionManager sessionManager;
     private User loggedUser;
-    private TextView textThreadName;
-    private Button savePostButton;
+    private TextView textThreadName, imgName;
+    private ImageView imgView;
+    private Button savePostButton, loadImageButton;
     private InformationAdapter info = new InformationAdapter();
-    private EditText content;
-    private String contentS;
+    EditText content;
+    final static int SELECT_PICTURE = 1;
+    String contentS;
+    String imageC, imageN;
+    Uri dataImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
+        imageN=null;
+        imageC=null;
         threadName = getIntent().getStringExtra("THREAD_NAME");
         threadId = getIntent().getIntExtra("threadId", 0);
         sessionManager = new SessionManager(this);
         loggedUser = sessionManager.loadSession();
         textThreadName = (TextView) findViewById(R.id.textThreadName);
         savePostButton = (Button) findViewById(R.id.buttonSavePost);
-
+        imgView = (ImageView) findViewById(R.id.imageView3);
         textThreadName.setText(threadName);
+        imgName = (TextView) findViewById(R.id.textView5);
+        loadImageButton = (Button) findViewById(R.id.buttonUploadPostImage);
 
         //SETTING LISTENERS FOR BUTTONS
+
         savePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,18 +77,73 @@ public class PostActivity extends AppCompatActivity {
                 contentS = content.getText().toString();
                 try {
                     new insert().execute("go");
-                    content.setText("");
-                    //Toast.makeText(PostActivity.this, "Si se inserto", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostActivity.this, "Si se inserto", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    //Toast.makeText(PostActivity.this, "No se inserto", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostActivity.this, "No se inserto", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
+        loadImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }});
+
+
 
     }
+
+    void chooseImage(){
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+        imgView.setVisibility(View.VISIBLE);
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK){
+            if(requestCode == SELECT_PICTURE){
+                ImageView img3 = (ImageView) findViewById(R.id.imageView3CP);
+                dataImg = data.getData();
+                if(dataImg != null){
+                    imgView.setImageURI(dataImg);
+                    imgView.setDrawingCacheEnabled(true);
+
+                    img3.setImageURI(dataImg);
+                    img3.setDrawingCacheEnabled(true);
+
+                    Bitmap bmap = img3.getDrawingCache();
+                    if(bmap!=null) {
+
+
+                        imgName.setText(loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png");
+                        imageN = loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png";
+                        imageC = encodeToBase64(bmap, Bitmap.CompressFormat.PNG, 100);
+                        Log.d("imageEncode", imageC);
+                    }
+                    else{
+                        Toast.makeText(this, "it is null!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        }
+    }
+
+
+
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+    }
+
 
     private class insert extends AsyncTask<String, String, String> {
         private ProgressDialog progDailog;
@@ -79,8 +155,17 @@ public class PostActivity extends AppCompatActivity {
             //CHECK IF THE DATA OF THE LOGIN IS CORRECT
             try {
                 //de momento imagen es cero y null
-                info.insertPost(threadId, contentS, loggedUser.getUsername(),
-                        0, null);
+                if(imageN == null || imageN.equals("")){
+                    info.insertPost(threadId, contentS, loggedUser.getUsername(),
+                            0, null);
+
+                }else{
+                    info.insertPost(threadId, contentS, loggedUser.getUsername(),
+                            1, imageN);
+                    info.insertImage(imageN, imageC);
+                }
+
+
                 return "did";
             }catch(IOException e){
 
@@ -91,7 +176,8 @@ public class PostActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             progDailog.dismiss();
-            Snackbar.make(findViewById(R.id.postLayout), "Post added", Snackbar.LENGTH_LONG).show();
+            finish();
+
         }
 
         @Override

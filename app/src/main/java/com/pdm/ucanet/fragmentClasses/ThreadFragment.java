@@ -1,21 +1,32 @@
 package com.pdm.ucanet.fragmentClasses;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Base64;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.pdm.ucanet.R;
 import com.pdm.ucanet.abstractEntities.Course;
@@ -24,9 +35,11 @@ import com.pdm.ucanet.resourceManagers.CourseCardLayoutAdapter;
 import com.pdm.ucanet.resourceManagers.InformationAdapter;
 import com.pdm.ucanet.resourceManagers.SessionManager;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Crash on 09/06/2017.
@@ -40,11 +53,16 @@ public class ThreadFragment extends Fragment {
     private Button uploadImage;
     private Button saveThread;
     private ArrayAdapter<String> dataAdapter;
-    private InformationAdapter info = new InformationAdapter();
+    InformationAdapter info = new InformationAdapter();
     private SessionManager sessionManager;
     private User loggedUser;
-    private String title, content;
-    private int courseId;
+    String title, content;
+    int courseId;
+    final static int SELECT_PICTURE = 1;
+    ImageView i1, i2;
+    String imageC, imageN;
+    Uri dataImg;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +73,8 @@ public class ThreadFragment extends Fragment {
         contentEdit = (EditText) view.findViewById(R.id.editContent);
         uploadImage = (Button) view.findViewById(R.id.buttonUploadImage);
         saveThread = (Button) view.findViewById(R.id.buttonSaveThread);
-
+        i1 = (ImageView) view.findViewById(R.id.imageThread);
+        i2 = (ImageView) view.findViewById(R.id.imageThreadMain);
         sessionManager = new SessionManager(getContext());
         loggedUser = sessionManager.loadSession();
 
@@ -72,6 +91,7 @@ public class ThreadFragment extends Fragment {
             public void onClick(View view) {
                 //UPLOADING IMAGE
 
+                chooseImage();
 
             }
         });
@@ -90,8 +110,6 @@ public class ThreadFragment extends Fragment {
                 }
 
                 new insertThread().execute("go");
-                titleEdit.setText("");
-                contentEdit.setText("");
 
             }
         });
@@ -103,6 +121,75 @@ public class ThreadFragment extends Fragment {
         return view;
     }
 
+
+
+
+
+
+
+
+    void chooseImage(){
+        Intent i = new Intent();
+        i2.setVisibility(View.VISIBLE);
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == SELECT_PICTURE){
+
+
+
+                dataImg = data.getData();
+                if(dataImg != null){
+                    i1.setImageURI(dataImg);
+                    i1.setDrawingCacheEnabled(true);
+
+                   i2.setImageURI(dataImg);
+                   i2.setDrawingCacheEnabled(true);
+
+
+
+
+
+
+
+                    Bitmap bmap = i2.getDrawingCache();
+
+
+                    if(bmap!=null) {
+
+
+                        imageN = loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png";
+                        imageC = encodeToBase64(bmap, Bitmap.CompressFormat.PNG, 100);
+                        Log.d("imageEncode", imageC);
+                    }
+                    else{
+                        Toast.makeText(getContext(), "it is null!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        }
+        i2.setVisibility(View.INVISIBLE);
+    }
+
+
+
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+    }
+
+
+
+
     private class insertThread extends AsyncTask<String, String, String> {
         private ProgressDialog progDailog;
 
@@ -113,7 +200,13 @@ public class ThreadFragment extends Fragment {
             //CHECK IF THE DATA OF THE LOGIN IS CORRECT
             try {
                 //de momento imagen es cero y null
-                info.insertThread(title, courseId, content, loggedUser.getUsername(), 0, null);
+                if(imageN == null || imageN.equals("")) {
+                    info.insertThread(title, courseId, content, loggedUser.getUsername(), 0, null);
+                }else{
+                    info.insertThread(title, courseId, content, loggedUser.getUsername(), 1, imageN);
+                    info.insertImage(imageN, imageC);
+
+                }
                 return "did";
             }catch(IOException e){
 
@@ -124,8 +217,14 @@ public class ThreadFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             progDailog.dismiss();
-            Snackbar.make(getActivity().findViewById(R.id.threadLayout), "Thread added", Snackbar.LENGTH_LONG).show();
-
+            i1.setImageResource(0);
+            i2.setImageResource(0);
+            imageC=null;
+            imageN=null;
+            title=null;
+            content=null;
+            titleEdit.setText("");
+            contentEdit.setText("");
         }
 
         @Override
@@ -143,6 +242,7 @@ public class ThreadFragment extends Fragment {
         protected void onProgressUpdate(String... values) {}
 
     }
+
 
 
 }

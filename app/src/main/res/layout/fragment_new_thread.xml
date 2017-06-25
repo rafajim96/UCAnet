@@ -4,8 +4,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:id="@+id/threadLayout"
     android:padding="16dp"
-    android:layout_height="match_parent">
 
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <Spinner
         android:id="@+id/spinnerCourses"
         android:layout_gravity="center"
@@ -45,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:ems="10"
         android:hint="Content:"
         android:inputType="textMultiLine" />
@@ -59,40 +63,38 @@
         android:layout_marginBottom="16dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imageThread"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="56dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonUploadImage"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+
                 android:layout_gravity="center"
                 android:text="Upload image" />
 
             <Button
                 android:id="@+id/buttonSaveThread"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+
                 android:layout_gravity="center"
                 android:text="Post Thread" />
         </LinearLayout>
 
 
-
-
     </LinearLayout>
-
+    <ImageView
+        android:id="@+id/imageThread"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_gravity="center" />
     <TextView
         android:id="@+id/messageCourseText"
         android:layout_width="wrap_content"
@@ -100,6 +102,10 @@
         android:layout_gravity="center"
         android:textColor="#000000"
         android:text="" />
-
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageThreadMain"
+        android:layout_width="match_parent"
+        android:layout_height="720px" />
 
 </LinearLayout>

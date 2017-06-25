@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.pdm.ucanet.fragmentClasses.HelpFragment;
 import com.pdm.ucanet.fragmentClasses.HomeFragment;
@@ -38,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         logOffButton = (ImageButton) findViewById(R.id.imgLogofButton);
         newThreadButton = (ImageButton) findViewById(R.id.imgThreadButton);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             //SETTING THE HOME FRAGMENT AS DEFAULT
             HomeFragment fragment = new HomeFragment();
             getSupportFragmentManager().beginTransaction()
@@ -51,8 +53,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING PROFILE FRAGMENT
-                android.support.v4.app.Fragment f =  getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                if(f != null && !(f instanceof ProfileFragment) && (f instanceof HomeFragment || f instanceof ThreadFragment)){  //(f != null && f instanceof ProfileFragment) to avoid replacing the same fragment
+
+                android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+                if (f != null && !(f instanceof ProfileFragment) && (f instanceof HomeFragment || f instanceof ThreadFragment)) {  //(f != null && f instanceof ProfileFragment) to avoid replacing the same fragment
                     ProfileFragment fragment = new ProfileFragment();  //CREATING AND INITIALIZING FRAGMENT
                     getSupportFragmentManager().beginTransaction()  //BEGINNING TRANSACTION TO REPLACE FRAGMENT
                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)  //ANIMATION FOR THE FRAGMENT, OMIT
@@ -61,8 +64,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
 
-
-                if(f != null && !(f instanceof ProfileFragment) && f instanceof HelpFragment){
+                if (f != null && !(f instanceof ProfileFragment) && f instanceof HelpFragment) {
                     ProfileFragment fragment = new ProfileFragment();
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
@@ -76,8 +78,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING HOME FRAGMENT
+
                 android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                if(f != null && !(f instanceof HomeFragment)){
+                if (f != null && !(f instanceof HomeFragment)) {
                     HomeFragment fragment = new HomeFragment();
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
@@ -91,8 +94,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING HELP FRAGMENT
-                android.support.v4.app.Fragment f =  getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                if(f != null && !(f instanceof HelpFragment) && (f instanceof HomeFragment || f instanceof ProfileFragment || f instanceof ThreadFragment)){
+
+                android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+                if (f != null && !(f instanceof HelpFragment) && (f instanceof HomeFragment || f instanceof ProfileFragment || f instanceof ThreadFragment)) {
                     HelpFragment fragment = new HelpFragment();
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -115,8 +119,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING NEW THREAD FRAGMENT
+
+
                 android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                if(f != null && !(f instanceof ThreadFragment)){
+                if (f != null && !(f instanceof ThreadFragment)) {
                     ThreadFragment fragment = new ThreadFragment();
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
