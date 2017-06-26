@@ -136,10 +136,12 @@ public class InformationAdapter {
        String response = sb.toString();
         Log.d("threadsGetter", response);
        try{
-           JSONArray threadInfoArray = new JSONArray(response);
+           JSONArray threadInfoArray = new JSONArray(response).getJSONArray(0);
+           JSONArray threadExtraArray = new JSONArray(response).getJSONArray(1);
            ArrayList<Thread> threads = new ArrayList<>();
            for(int i = 0; i< threadInfoArray.length(); i++){
-               threads.add(new Thread(threadInfoArray.getJSONObject(i).getInt("threadId"), threadInfoArray.getJSONObject(i).getString("title")));
+               threads.add(new Thread(threadInfoArray.getJSONObject(i).getInt("threadId"), threadInfoArray.getJSONObject(i).getString("title"), threadExtraArray.getJSONObject(i).getString("userId"), threadExtraArray.getJSONObject(i).getString("creation")));
+
            }
            return threads;
 

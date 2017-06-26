@@ -111,7 +111,7 @@ public class ThreadActivity extends AppCompatActivity {
                 posts = info.loadPosts(currentThread.getId());
                 return "did";
             }catch(IOException e){
-                Toast.makeText(ThreadActivity.this, "No se pudieron obtener los posts 2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ThreadActivity.this, "No se pudo obtener los posts ", Toast.LENGTH_SHORT).show();
             }
             return "didnt";
         }
@@ -125,7 +125,7 @@ public class ThreadActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(straggLayoutManager);
                 recyclerView.setAdapter(new PostCardLayoutAdapter(ThreadActivity.this, currentThread.getPosts()));
             }catch (Exception e){
-                Toast.makeText(ThreadActivity.this, "Could not load posts", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ThreadActivity.this, "No se pudo obtener los posts", Toast.LENGTH_SHORT).show();
             }
             progDailog.dismiss();
 
@@ -135,7 +135,7 @@ public class ThreadActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progDailog = new ProgressDialog(ThreadActivity.this);
-            progDailog.setMessage("Getting data...");
+            progDailog.setMessage("Obteniendo información...");
             progDailog.setIndeterminate(false);
             progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progDailog.setCancelable(true);

@@ -10,11 +10,20 @@ public class Thread {
     private int id;
     private String title;
     private ArrayList<Post> posts;
+    private String user, date;
 
     public Thread(int id, String name){
         this.id = id;
         this.title = name;
         //CREATE ARRAYLIST OF POSTS
+    }
+
+    public Thread(int id, String title, String user, String date) {
+        this.id = id;
+        this.title = title;
+
+        this.user = user;
+        this.date = date;
     }
 
     public String getTitle() {
@@ -39,5 +48,22 @@ public class Thread {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

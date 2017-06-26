@@ -32,7 +32,7 @@
         android:textSize="16sp"
         android:layout_marginBottom="16dp"
         android:textColor="#000000"
-        android:text="Your answer:" />
+        android:text="Respuesta:" />
 
     <EditText
         android:id="@+id/editText"
@@ -42,7 +42,7 @@
         android:ems="10"
         android:inputType="textMultiLine"
         android:layout_marginBottom="16dp"
-        android:hint="Content"/>
+        android:hint="Contenido"/>
 
     <TextView
         android:id="@+id/textView5"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textColor="#000000"
-        android:text="Image: (optional)" />
+        android:text="Imagen: (opcional)" />
 
 
 
@@ -59,7 +59,7 @@
         android:id="@+id/buttonUploadPostImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload Image" />
+        android:text="Cargar imágen" />
 
 
 
@@ -70,7 +70,7 @@ android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save post" />
+        android:text="Insertar post" />
 
 
 </LinearLayout>

@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="Home: where you can access your groups and see their latest thread." />
+            android:text="Accede a tus cursos y mira los temas" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="Profile: here you can see your profile data and add new friends" />
+            android:text="Perfil de usuario" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="Log Off: you can log off your account by clicking this button." />
+            android:text="Cerrar sesión" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,52 +87,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="New Post: create a new post and publish it on any of your groups for everyone to see." />
+            android:text="Crear un nuevo tema" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
 
-        <ImageView
-            android:id="@+id/imgHelpSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            app:srcCompat="@android:drawable/ic_menu_search" />
 
-        <TextView
-            android:id="@+id/textHelpSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text="Search: search for a student or a group to acces their content." />
-    </LinearLayout>
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-        <ImageView
-            android:id="@+id/imgHelpSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            app:srcCompat="@android:drawable/ic_menu_manage" />
-
-        <TextView
-            android:id="@+id/textHelpSettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text="Settings: remove friends or delete your posts." />
-    </LinearLayout>
-
-    <LinearLayout
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -141,7 +104,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Made by:"
+            android:text="Creadores:"
             android:textColor="#000000" />
 
         <TextView

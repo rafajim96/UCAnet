@@ -51,6 +51,8 @@ public class ThreadCardLayoutAdapter extends CustomRecyclerViewAdapter {
         final ThreadCardLayoutAdapter.ViewHolder myHolder = (ThreadCardLayoutAdapter.ViewHolder) holder;
         myHolder.tItem = threads.get(position);
         myHolder.threadName.setText(threads.get(position).getTitle());
+        myHolder.user.setText(threads.get(position).getUser());
+        myHolder.creation.setText(threads.get(position).getDate());
 
         myHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +75,8 @@ public class ThreadCardLayoutAdapter extends CustomRecyclerViewAdapter {
         private final View mView;
         private TextView threadName;
         private Thread tItem;
-        private TextView button;
+        private TextView button, user, creation;
+
         //public Button description;
 
 
@@ -82,6 +85,8 @@ public class ThreadCardLayoutAdapter extends CustomRecyclerViewAdapter {
             mView = itemView;
             threadName = (TextView) itemView.findViewById(R.id.thread_titulo_text_view);
             button = (TextView) itemView.findViewById(R.id.button);
+            user = (TextView) itemView.findViewById(R.id.user_thread);
+            creation = (TextView) itemView.findViewById(R.id.creation_thread);
             //description = (Button) itemView.findViewById(R.id.button);
         }
 

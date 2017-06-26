@@ -50,6 +50,7 @@ public class PostActivity extends AppCompatActivity {
     String contentS;
     String imageC, imageN;
     Uri dataImg;
+    Bitmap bmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class PostActivity extends AppCompatActivity {
         textThreadName.setText(threadName);
         imgName = (TextView) findViewById(R.id.textView5);
         loadImageButton = (Button) findViewById(R.id.buttonUploadPostImage);
+        bmap = null;
 
         //SETTING LISTENERS FOR BUTTONS
 
@@ -77,10 +79,10 @@ public class PostActivity extends AppCompatActivity {
                 contentS = content.getText().toString();
                 try {
                     new insert().execute("go");
-                    Toast.makeText(PostActivity.this, "Si se inserto", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostActivity.this, "Post insertado correctamente", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(PostActivity.this, "No se inserto", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostActivity.this, "Error al insertar post", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -117,18 +119,12 @@ public class PostActivity extends AppCompatActivity {
                     img3.setImageURI(dataImg);
                     img3.setDrawingCacheEnabled(true);
 
-                    Bitmap bmap = img3.getDrawingCache();
-                    if(bmap!=null) {
+                    bmap = img3.getDrawingCache();
+                    String name = String.valueOf(System.currentTimeMillis()/1000L);
+                    imgName.setText(loggedUser.getUsername() + name + ".png");
+                    imageN = loggedUser.getUsername() + name + ".png";
 
 
-                        imgName.setText(loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png");
-                        imageN = loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png";
-                        imageC = encodeToBase64(bmap, Bitmap.CompressFormat.PNG, 100);
-                        Log.d("imageEncode", imageC);
-                    }
-                    else{
-                        Toast.makeText(this, "it is null!", Toast.LENGTH_SHORT).show();
-                    }
 
                 }
             }
@@ -153,6 +149,18 @@ public class PostActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             //CHECK IF THE DATA OF THE LOGIN IS CORRECT
+            try {
+                if (bmap != null) {
+
+
+                    imageC = encodeToBase64(bmap, Bitmap.CompressFormat.PNG, 100);
+                    Log.d("imageEncode", imageC);
+                } else {
+                    Toast.makeText(PostActivity.this, "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+                }
+            }catch (Exception e){
+                Log.d("error imagen post", e.getMessage().toString());
+            }
             try {
                 //de momento imagen es cero y null
                 if(imageN == null || imageN.equals("")){
@@ -184,7 +192,7 @@ public class PostActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progDailog = new ProgressDialog(PostActivity.this);
-            progDailog.setMessage("Inserting data...");
+            progDailog.setMessage("Insertando post...");
             progDailog.setIndeterminate(false);
             progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progDailog.setCancelable(true);

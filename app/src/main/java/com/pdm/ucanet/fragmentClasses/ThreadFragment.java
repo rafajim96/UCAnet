@@ -62,11 +62,13 @@ public class ThreadFragment extends Fragment {
     ImageView i1, i2;
     String imageC, imageN;
     Uri dataImg;
+    Bitmap bmap;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_thread, container, false);
+        bmap = null;
 
         coursesSpinner = (Spinner) view.findViewById(R.id.spinnerCourses);
         titleEdit = (EditText) view.findViewById(R.id.editTitle);
@@ -108,8 +110,16 @@ public class ThreadFragment extends Fragment {
                         break;
                     }
                 }
+                try {
+                    new insertThread().execute("go");
+                    Toast.makeText(getContext(), "Post insertado correctamente", Toast.LENGTH_SHORT).show();
 
-                new insertThread().execute("go");
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Error al insertar post", Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });
@@ -152,25 +162,10 @@ public class ThreadFragment extends Fragment {
                    i2.setImageURI(dataImg);
                    i2.setDrawingCacheEnabled(true);
 
+                    bmap = i2.getDrawingCache();
+                    imageN = loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png";
 
 
-
-
-
-
-                    Bitmap bmap = i2.getDrawingCache();
-
-
-                    if(bmap!=null) {
-
-
-                        imageN = loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png";
-                        imageC = encodeToBase64(bmap, Bitmap.CompressFormat.PNG, 100);
-                        Log.d("imageEncode", imageC);
-                    }
-                    else{
-                        Toast.makeText(getContext(), "it is null!", Toast.LENGTH_SHORT).show();
-                    }
 
                 }
             }
@@ -198,6 +193,21 @@ public class ThreadFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             //CHECK IF THE DATA OF THE LOGIN IS CORRECT
+            try {
+
+                if (bmap != null) {
+
+
+                    imageC = encodeToBase64(bmap, Bitmap.CompressFormat.PNG, 100);
+                    Log.d("imageEncode", imageC);
+                } else {
+                    Toast.makeText(getContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+                }
+            }catch (Exception e){
+                Log.d("error imagen post", e.getMessage().toString());
+
+            }
+
             try {
                 //de momento imagen es cero y null
                 if(imageN == null || imageN.equals("")) {
@@ -231,7 +241,7 @@ public class ThreadFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progDailog = new ProgressDialog(getContext());
-            progDailog.setMessage("Inserting data...");
+            progDailog.setMessage("Insertando post...");
             progDailog.setIndeterminate(false);
             progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progDailog.setCancelable(true);

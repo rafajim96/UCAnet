@@ -117,33 +117,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray"/>
 
-        <ImageButton
-            android:id="@+id/imgSearchButton"
-            android:layout_margin="8dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_search"
-            android:background="?attr/selectableItemBackgroundBorderless" />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"/>
-
-        <ImageButton
-            android:id="@+id/imgSettingsButton"
-            android:layout_width="0dp"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_preferences"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"/>
 
         <ImageButton
             android:id="@+id/imgHelpButton"

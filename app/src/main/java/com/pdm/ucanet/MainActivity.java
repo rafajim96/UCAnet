@@ -80,15 +80,15 @@ public class MainActivity extends AppCompatActivity{
 
                     sessionManager = new SessionManager(getApplicationContext());
                     sessionManager.savingSession(loggedUser);
-                    return "Loggin in";
+                    return "Iniciando sesión";
                 }
                 else{
-                    return "Invalid data";
+                    return "Datos inválidos";
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return "Invalid data";
+            return "Datos inválidos";
         }
 
         @Override
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity{
                 progDailog.dismiss();
 
             }
-            if (result.equals("Loggin in")){
+            if (result.equals("Iniciando sesión")){
                 message.setText(result);
                 try {
                     Thread.sleep(500);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity{
         protected void onPreExecute() {
             super.onPreExecute();
             progDailog = new ProgressDialog(MainActivity.this);
-            progDailog.setMessage("Validating...");
+            progDailog.setMessage("Validando...");
             progDailog.setIndeterminate(false);
             progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progDailog.setCancelable(true);

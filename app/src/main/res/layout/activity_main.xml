@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:textColor="#000000"
-            android:text="A social network that allows you to create threads and help other students." />
+            android:text="¡Conéctate con tus compañeros de curso y comparte con ellos de manera oficial!" />
 
         <TextView
             android:id="@+id/userText"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"
-            android:text="ID:" />
+            android:text="CARNÉ:" />
 
         <EditText
             android:id="@+id/editTextUser"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"
-            android:text="PASSWORD:" />
+            android:text="CONTRASEÑA:" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:text="LOGIN" />
+            android:text="Ingresar" />
 
         <TextView
             android:id="@+id/messageText"

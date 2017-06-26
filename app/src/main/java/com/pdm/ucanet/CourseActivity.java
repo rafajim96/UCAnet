@@ -99,7 +99,7 @@ private class LoadThreads extends AsyncTask<String, String, String> {
             threads = info.loadThreads(currentCourse.getIdCourse());
             return "did";
         }catch(IOException e){
-            Toast.makeText(CourseActivity.this, "No se pudieron obtener los hilos 2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CourseActivity.this, "No se pudo obtener los temas", Toast.LENGTH_SHORT).show();
         }
         return "didnt";
     }
@@ -113,7 +113,7 @@ private class LoadThreads extends AsyncTask<String, String, String> {
             recyclerView.setLayoutManager(straggLayoutManager);
             recyclerView.setAdapter(new ThreadCardLayoutAdapter(CourseActivity.this, currentCourse.getCourseThreads()));
         }catch (Exception e){
-            Toast.makeText(CourseActivity.this, "Could not load threads", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CourseActivity.this, "No se pudo obtener los temas", Toast.LENGTH_SHORT).show();
         }
         progDailog.dismiss();
 
@@ -123,7 +123,7 @@ private class LoadThreads extends AsyncTask<String, String, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         progDailog = new ProgressDialog(CourseActivity.this);
-        progDailog.setMessage("Getting data...");
+        progDailog.setMessage("Obteniendo información...");
         progDailog.setIndeterminate(false);
         progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progDailog.setCancelable(true);
