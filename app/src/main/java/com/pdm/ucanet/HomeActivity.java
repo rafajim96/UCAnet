@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton logOffButton;
     private ImageButton newThreadButton;
     private SessionManager sessionManager;
-    private ScrollView scroll;
+    //private ScrollView scroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         helpButton = (ImageButton) findViewById(R.id.imgHelpButton);
         logOffButton = (ImageButton) findViewById(R.id.imgLogofButton);
         newThreadButton = (ImageButton) findViewById(R.id.imgThreadButton);
-        scroll = (ScrollView) findViewById(R.id.scroll);
+        //scroll = (ScrollView) findViewById(R.id.scroll);
 
         if (savedInstanceState == null) {
             //SETTING THE HOME FRAGMENT AS DEFAULT
@@ -134,7 +134,7 @@ public class HomeActivity extends AppCompatActivity {
                             .commit();
                 }
 
-                scroll.fullScroll(ScrollView.FOCUS_UP);
+                //scroll.fullScroll(ScrollView.FOCUS_UP);
 
 
             }
