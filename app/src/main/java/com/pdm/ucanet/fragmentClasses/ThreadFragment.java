@@ -34,6 +34,7 @@ import com.pdm.ucanet.concreteEntities.User;
 import com.pdm.ucanet.resourceManagers.CourseCardLayoutAdapter;
 import com.pdm.ucanet.resourceManagers.InformationAdapter;
 import com.pdm.ucanet.resourceManagers.SessionManager;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -162,11 +163,14 @@ public class ThreadFragment extends Fragment {
 
                 dataImg = data.getData();
                 if(dataImg != null){
+
+
+
                     i1.setImageURI(dataImg);
                     i1.setDrawingCacheEnabled(true);
 
-                   i2.setImageURI(dataImg);
-                   i2.setDrawingCacheEnabled(true);
+                    i2.setImageURI(dataImg);
+                    i2.setDrawingCacheEnabled(true);
 
                     bmap = i2.getDrawingCache();
                     imageN = loggedUser.getUsername() + String.valueOf(System.currentTimeMillis() / 1000L) + ".png";

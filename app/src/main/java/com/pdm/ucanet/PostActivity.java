@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.pdm.ucanet.concreteEntities.User;
 import com.pdm.ucanet.resourceManagers.InformationAdapter;
 import com.pdm.ucanet.resourceManagers.SessionManager;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -114,6 +115,11 @@ public class PostActivity extends AppCompatActivity {
                 ImageView img3 = (ImageView) findViewById(R.id.imageView3CP);
                 dataImg = data.getData();
                 if(dataImg != null){
+
+
+
+
+
                     imgView.setImageURI(dataImg);
                     imgView.setDrawingCacheEnabled(true);
 
