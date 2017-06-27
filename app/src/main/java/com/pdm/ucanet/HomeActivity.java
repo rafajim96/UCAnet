@@ -34,6 +34,14 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        sessionManager = new SessionManager(getApplicationContext());
+
+        if(sessionManager.checkLogin()){
+            finish();
+        }
+
+
+
         //INITIALIZING BUTTONS
         profileButton = (ImageButton) findViewById(R.id.imgProfileButton);
         homeButton = (ImageButton) findViewById(R.id.imgHomeButton);
@@ -109,7 +117,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //LOGGING OF THE APP
-                sessionManager = new SessionManager(getApplicationContext());
                 new LongOperation().execute();
             }
         });

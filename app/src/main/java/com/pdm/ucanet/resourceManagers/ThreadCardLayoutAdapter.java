@@ -17,8 +17,14 @@ import com.pdm.ucanet.R;
 import com.pdm.ucanet.ThreadActivity;
 import com.pdm.ucanet.abstractEntities.Course;
 import com.pdm.ucanet.abstractEntities.Thread;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  * Created by Crash on 06/06/2017.
@@ -54,6 +60,11 @@ public class ThreadCardLayoutAdapter extends CustomRecyclerViewAdapter {
         myHolder.user.setText(threads.get(position).getUser());
         myHolder.creation.setText(threads.get(position).getDate());
 
+        Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+threads.get(position).getUser()+".png").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE)
+                .placeholder(R.drawable.profile)
+                .transform(new CropCircleTransformation())
+                .into(myHolder.imgCirc);
+
         myHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +87,7 @@ public class ThreadCardLayoutAdapter extends CustomRecyclerViewAdapter {
         private TextView threadName;
         private Thread tItem;
         private TextView button, user, creation;
+        private CircleImageView imgCirc;
 
         //public Button description;
 
@@ -87,6 +99,7 @@ public class ThreadCardLayoutAdapter extends CustomRecyclerViewAdapter {
             button = (TextView) itemView.findViewById(R.id.button);
             user = (TextView) itemView.findViewById(R.id.user_thread);
             creation = (TextView) itemView.findViewById(R.id.creation_thread);
+            imgCirc = (CircleImageView) itemView.findViewById(R.id.profile_image);
             //description = (Button) itemView.findViewById(R.id.button);
         }
 

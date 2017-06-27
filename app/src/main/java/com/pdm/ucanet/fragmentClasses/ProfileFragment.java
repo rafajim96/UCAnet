@@ -243,7 +243,7 @@ public class ProfileFragment extends Fragment {
             }
 
             if(f){
-                Picasso.with(getContext()).load("https://mapacheproject.xyz/UCAnet/resources/images/" + loggedUser.getUsername() + ".png").memoryPolicy(MemoryPolicy.NO_CACHE ).networkPolicy(NetworkPolicy.NO_CACHE).into(img);
+                Picasso.with(getContext()).load("https://mapacheproject.xyz/UCAnet/resources/images/" + loggedUser.getUsername() + ".png").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(img);
 
             }
 

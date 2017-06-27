@@ -27,10 +27,14 @@ import com.pdm.ucanet.R;
 import com.pdm.ucanet.ThreadActivity;
 import com.pdm.ucanet.abstractEntities.Post;
 import com.pdm.ucanet.abstractEntities.Thread;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import uk.co.deanwild.flowtextview.FlowTextView;
 
 /**
@@ -74,6 +78,11 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         myHolder.creationPost.setText(posts.get(position).getDate());
         Log.d("visibilityImage", String.valueOf(myHolder.pItem.isImgFlag()));
 
+        Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+posts.get(position).getUser()+".png").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE)
+                .placeholder(R.drawable.profile)
+                .transform(new CropCircleTransformation())
+                .into(myHolder.cirImg);
+
         Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+posts.get(position).getImageName()).into(myHolder.imgButton);
 
 
@@ -102,11 +111,34 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
                 ImageView imgImage = (ImageView) imageDialog.findViewById(R.id.imgImage);
-                Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+posts.get(position).getImageName()).into(imgImage);
+                Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+posts.get(position).getImageName()).placeholder(R.drawable.profile).into(imgImage);
 
                 dialog.show();
             }
         });
+
+        /*myHolder.cirImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ImageButton stuff = (ImageButton) view.findViewById(R.id.thumb_button_1);
+                //stuff.setTag(R.mipmap.ic_launcher);
+
+                LayoutInflater inflater = activity.getLayoutInflater();
+                View imageDialog = inflater.inflate(R.layout.dialog_image, null);
+                Dialog dialog = new Dialog(activity);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(imageDialog);
+                dialog.setCancelable(true);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+                ImageView imgImage = (ImageView) imageDialog.findViewById(R.id.imgImage);
+                Picasso.with(activity).load("https://mapacheproject.xyz/UCAnet/resources/images/"+posts.get(position).getUser()+".png")
+                        .into(imgImage);
+
+                dialog.show();
+            }
+        });*/
     }
 
     @Override
@@ -121,6 +153,7 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
         private TextView creationPost;
         private Post pItem;
         private ImageButton imgButton;
+        private CircleImageView cirImg;
 
         //public Button description;
 
@@ -132,6 +165,7 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
             userIdPost = (TextView) itemView.findViewById(R.id.userIdPostText);
             creationPost = (TextView) itemView.findViewById(R.id.creationPostText);
             imgButton = (ImageButton) itemView.findViewById(R.id.thumb_button_1);
+            cirImg = (CircleImageView) itemView.findViewById(R.id.profile_image);
 
         }
     }
