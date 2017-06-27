@@ -15,7 +15,6 @@ import com.pdm.ucanet.concreteEntities.User;
 public class SessionManager {
     private Gson gson;
     private String json;
-    private User loggedUser;
     private SharedPreferences mPrefs;
     private SharedPreferences.Editor editor;
     private Context context;
@@ -30,7 +29,6 @@ public class SessionManager {
         json = mPrefs.getString("MyObject", "");
         return gson.fromJson(json, User.class);
     }
-
 
     public void savingSession(User user){
         //INITIALIZING SHARED PREFERENCES OBJECT (SESSION MANAGER)

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.provider.ContactsContract;
 import android.support.v7.widget.CardView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.pdm.ucanet.CourseActivity;
 import com.pdm.ucanet.R;
 import com.pdm.ucanet.abstractEntities.Course;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,8 @@ import java.util.ArrayList;
  */
 
 public class CourseCardLayoutAdapter extends CustomRecyclerViewAdapter {
+    private final String COURSE_IMAGE =
+            "https://mapacheproject.xyz/UCAnet/resources/images/courses.jpg";
     private Activity activity;
     private final ArrayList<Course> courses;
 
@@ -48,10 +52,10 @@ public class CourseCardLayoutAdapter extends CustomRecyclerViewAdapter {
     @Override
     public void onBindViewHolder(final CustomRecycleViewHolder holder, final int position) {
 
-
         final ViewHolder myHolder = (ViewHolder) holder;
         myHolder.cItem = courses.get(position);
         myHolder.courseName.setText(courses.get(position).getCourseName());
+        Picasso.with(activity).load(COURSE_IMAGE).into(myHolder.imageCourse);
 
         myHolder.description.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +79,7 @@ public class CourseCardLayoutAdapter extends CustomRecyclerViewAdapter {
         private TextView courseName;
         private Course cItem;
         private Button description;
-        //private ImageView
+        private ImageView imageCourse;
 
 
         public ViewHolder(View itemView) {
@@ -83,6 +87,7 @@ public class CourseCardLayoutAdapter extends CustomRecyclerViewAdapter {
             mView = itemView;
             courseName = (TextView) itemView.findViewById(R.id.course_titulo_text_view);
             description = (Button) itemView.findViewById(R.id.button);
+            imageCourse = (ImageView) itemView.findViewById(R.id.imageCourse);
         }
 
 

@@ -45,12 +45,12 @@ public class PostActivity extends AppCompatActivity {
     private ImageView imgView;
     private Button savePostButton, loadImageButton;
     private InformationAdapter info = new InformationAdapter();
-    EditText content;
+    private EditText content;
     final static int SELECT_PICTURE = 1;
-    String contentS;
-    String imageC, imageN;
-    Uri dataImg;
-    Bitmap bmap;
+    private String contentS;
+    private String imageC, imageN;
+    private Uri dataImg;
+    private Bitmap bmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,24 +77,26 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 content = (EditText) findViewById(R.id.editText);
                 contentS = content.getText().toString();
-                try {
-                    new insert().execute("go");
-                    Toast.makeText(PostActivity.this, "Post insertado correctamente", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(PostActivity.this, "Error al insertar post", Toast.LENGTH_SHORT).show();
-                }
 
+                if(content.getText().toString().equals("")){
+                    Toast.makeText(getBaseContext(), "Por favor rellene los campos", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    try {
+                        new insert().execute("go");
+                        Toast.makeText(PostActivity.this, "Post insertado correctamente", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(PostActivity.this, "Error al insertar post", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
-
         loadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
             }});
-
-
 
     }
 
@@ -104,7 +106,6 @@ public class PostActivity extends AppCompatActivity {
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
         imgView.setVisibility(View.VISIBLE);
-
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -131,15 +132,13 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-
-
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat,
+                                        int quality)
     {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
         image.compress(compressFormat, quality, byteArrayOS);
         return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
-
 
     private class insert extends AsyncTask<String, String, String> {
         private ProgressDialog progDailog;
@@ -204,7 +203,6 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-
-
-
 }
+
+

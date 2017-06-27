@@ -14,7 +14,8 @@ public class Post {
         this.content = content;
     }
 
-    public Post(int id, String content, String date, String user, boolean imgFlag, boolean op, String userName, String imageName) {
+    public Post(int id, String content, String date, String user, boolean imgFlag,
+                boolean op, String userName, String imageName) {
         this.id = id;
         this.content = content;
         this.date = date;
@@ -64,7 +65,6 @@ public class Post {
     public void setImgFlag(boolean imgFlag) {
         this.imgFlag = imgFlag;
     }
-
 
     public boolean isOp() {
         return op;

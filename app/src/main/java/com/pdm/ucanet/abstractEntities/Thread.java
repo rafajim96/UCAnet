@@ -15,7 +15,6 @@ public class Thread {
     public Thread(int id, String name){
         this.id = id;
         this.title = name;
-        //CREATE ARRAYLIST OF POSTS
     }
 
     public Thread(int id, String title, String user, String date) {

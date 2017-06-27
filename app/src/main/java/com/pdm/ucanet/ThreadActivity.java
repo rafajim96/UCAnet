@@ -138,7 +138,7 @@ public class ThreadActivity extends AppCompatActivity {
             progDailog.setMessage("Obteniendo información...");
             progDailog.setIndeterminate(false);
             progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progDailog.setCancelable(true);
+            progDailog.setCancelable(false);
             progDailog.show();
         }
 

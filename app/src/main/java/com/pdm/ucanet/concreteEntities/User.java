@@ -18,13 +18,14 @@ public class User {
     private boolean photo = false;
 
 
-    public User(String username, String pass){
+    public User(String username){
         this.username = username;
         courses = new ArrayList<>();
         coursesNames = new ArrayList<>();
     }
 
-    public User(String name, String career, String faculty, String username, ArrayList<Course> courses, boolean photo) {
+    public User(String name, String career, String faculty, String username,
+                ArrayList<Course> courses, boolean photo) {
         this.name = name;
         this.career = career;
         this.faculty = faculty;
@@ -50,18 +51,6 @@ public class User {
         return career;
     }
 
-    public void setCareer(String career) {
-        this.career = career;
-    }
-
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -72,6 +61,22 @@ public class User {
 
     public ArrayList<Course> getCourses() {
         return courses;
+    }
+
+    public ArrayList<String> getCoursesNames(){
+        return coursesNames;
+    }
+
+    public void setCareer(String career) {
+        this.career = career;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
     public void setCourses(ArrayList<Course> courses) {
@@ -86,7 +91,4 @@ public class User {
         this.photo = photo;
     }
 
-    public ArrayList<String> getCoursesNames(){
-        return coursesNames;
-    }
 }

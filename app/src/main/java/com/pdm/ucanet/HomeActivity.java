@@ -55,13 +55,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING PROFILE FRAGMENT
-
                 android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                if (f != null && !(f instanceof ProfileFragment) && (f instanceof HomeFragment || f instanceof ThreadFragment)) {  //(f != null && f instanceof ProfileFragment) to avoid replacing the same fragment
-                    ProfileFragment fragment = new ProfileFragment();  //CREATING AND INITIALIZING FRAGMENT
-                    getSupportFragmentManager().beginTransaction()  //BEGINNING TRANSACTION TO REPLACE FRAGMENT
-                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)  //ANIMATION FOR THE FRAGMENT, OMIT
-                            .replace(R.id.fragmentContainer, fragment) //R.id.fragmentContainer is a linear-layout with that id on the xml, and the "fragment" to insert
+                if (f != null && !(f instanceof ProfileFragment) && (f instanceof HomeFragment || f instanceof ThreadFragment)) {
+                    ProfileFragment fragment = new ProfileFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                            .replace(R.id.fragmentContainer, fragment)
                             .commit();
                 }
 
@@ -80,7 +79,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING HOME FRAGMENT
-
                 android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                 if (f != null && !(f instanceof HomeFragment)) {
                     HomeFragment fragment = new HomeFragment();
@@ -96,7 +94,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING HELP FRAGMENT
-
                 android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                 if (f != null && !(f instanceof HelpFragment) && (f instanceof HomeFragment || f instanceof ProfileFragment || f instanceof ThreadFragment)) {
                     HelpFragment fragment = new HelpFragment();
@@ -121,8 +118,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CREATING NEW THREAD FRAGMENT
-
-
                 android.support.v4.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                 if (f != null && !(f instanceof ThreadFragment)) {
                     ThreadFragment fragment = new ThreadFragment();
@@ -138,8 +133,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     private class LongOperation extends AsyncTask<String, String, String> {
         ProgressDialog progDailog = new ProgressDialog(HomeActivity.this);
@@ -161,10 +154,6 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            //TextView txt = (TextView) findViewById(R.id.output);
-            //txt.setText("Executed"); // txt.setText(result);
-            // might want to change "executed" for the returned string passed
-            // into onPostExecute() but that is upto you
             super.onPostExecute(result);
             if (result.equals("Logging off")){
                 try {
@@ -176,7 +165,7 @@ public class HomeActivity extends AppCompatActivity {
             }
             Intent i = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(i);
-            finish();  //Kill the activity from which you will go to next activity
+            finish();
         }
 
         @Override

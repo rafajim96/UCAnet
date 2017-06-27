@@ -66,7 +66,7 @@ public class ThreadFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_thread, container, false);
         bmap = null;
 
@@ -101,25 +101,31 @@ public class ThreadFragment extends Fragment {
         saveThread.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //SAVE THREAD
-                title = titleEdit.getText().toString();
-                content = contentEdit.getText().toString();
-                for(Course c : loggedUser.getCourses()){
-                    if(c.getCourseName().equals(coursesSpinner.getSelectedItem().toString())){
-                        courseId = c.getIdCourse();
-                        break;
+
+                if(titleEdit.getText().toString().equals("") || contentEdit.getText().toString().equals("")){
+                    Toast.makeText(getContext(), "Por favor rellene los campos", Toast.LENGTH_SHORT).show();
+                }else{
+                    //SAVE THREAD
+                    title = titleEdit.getText().toString();
+                    content = contentEdit.getText().toString();
+                    for(Course c : loggedUser.getCourses()){
+                        if(c.getCourseName().equals(coursesSpinner.getSelectedItem().toString())){
+                            courseId = c.getIdCourse();
+                            break;
+                        }
+                    }
+                    try {
+                        new insertThread().execute("go");
+                        Toast.makeText(getContext(), "Post insertado correctamente", Toast.LENGTH_SHORT).show();
+
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Error al insertar post", Toast.LENGTH_SHORT).show();
+
                     }
                 }
-                try {
-                    new insertThread().execute("go");
-                    Toast.makeText(getContext(), "Post insertado correctamente", Toast.LENGTH_SHORT).show();
 
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                    Toast.makeText(getContext(), "Error al insertar post", Toast.LENGTH_SHORT).show();
-
-                }
 
             }
         });
@@ -211,6 +217,7 @@ public class ThreadFragment extends Fragment {
             try {
                 //de momento imagen es cero y null
                 if(imageN == null || imageN.equals("")) {
+
                     info.insertThread(title, courseId, content, loggedUser.getUsername(), 0, null);
                 }else{
                     info.insertThread(title, courseId, content, loggedUser.getUsername(), 1, imageN);

@@ -15,9 +15,7 @@ public class Course {
     public Course(int id, String name){
         this.idCourse = id;
         this.courseName = name;
-
     }
-
 
     public int getIdCourse() {
         return idCourse;

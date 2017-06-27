@@ -25,7 +25,8 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -33,7 +34,8 @@ public class HomeFragment extends Fragment {
         loggedUser = sessionManager.loadSession();
 
         recyclerView.setHasFixedSize(true);
-        StaggeredGridLayoutManager straggLayoutManager = new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager straggLayoutManager =
+                new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(straggLayoutManager);
         recyclerView.setAdapter(new CourseCardLayoutAdapter(getActivity(), loggedUser.getCourses()));
 

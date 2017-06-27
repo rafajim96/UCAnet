@@ -65,15 +65,10 @@ public class CourseActivity extends AppCompatActivity{
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                //fetchTimelineAsync(0);
                 loadContent();
                 swipeContainer.setRefreshing(false);
             }
         });
-
     }
 
     private void loadContent(){
@@ -84,7 +79,6 @@ public class CourseActivity extends AppCompatActivity{
 
 
     }
-
 
 private class LoadThreads extends AsyncTask<String, String, String> {
     private ProgressDialog progDailog;
@@ -134,10 +128,6 @@ private class LoadThreads extends AsyncTask<String, String, String> {
     protected void onProgressUpdate(String... values) {}
 
 }
-
-
-
-
 }
 
 

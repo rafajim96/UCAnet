@@ -92,8 +92,6 @@ public class PostCardLayoutAdapter extends CustomRecyclerViewAdapter {
                 //ImageButton stuff = (ImageButton) view.findViewById(R.id.thumb_button_1);
                 //stuff.setTag(R.mipmap.ic_launcher);
 
-
-
                 LayoutInflater inflater = activity.getLayoutInflater();
                 View imageDialog = inflater.inflate(R.layout.dialog_image, null);
                 Dialog dialog = new Dialog(activity);

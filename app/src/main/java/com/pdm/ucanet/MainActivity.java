@@ -131,8 +131,5 @@ public class MainActivity extends AppCompatActivity{
             progDailog.show();
         }
     }
-
-
-
-
 }
+

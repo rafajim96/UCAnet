@@ -201,7 +201,8 @@ public class InformationAdapter {
        return new ArrayList<>();
    }
 
-   public boolean insertPost(int threadId, String content, String userId, int image, String imageName) throws IOException{
+   public boolean insertPost(int threadId, String content, String userId,
+                             int image, String imageName) throws IOException{
        URL url = new URL(insertPostFile);
        Map<String,Object> params = new LinkedHashMap<>();
        params.put("threadId", threadId);
@@ -244,7 +245,8 @@ public class InformationAdapter {
        return false;
    }
 
-    public boolean insertThread(String title, int courseId, String content, String userId, int image, String imageName) throws IOException{
+   public boolean insertThread(String title, int courseId, String content,
+                                String userId, int image, String imageName) throws IOException{
         URL url = new URL(insertThreadFile);
         Map<String,Object> params = new LinkedHashMap<>();
         params.put("title", title);
