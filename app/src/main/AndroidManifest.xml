@@ -12,19 +12,26 @@
         android:supportsRtl="true"
         android:configChanges="orientation|screenSize"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
+
         </activity>
 
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CourseActivity"/>
-        <activity android:name=".ThreadActivity"/>
-        <activity android:name=".PostActivity"/>
+        <activity android:name=".CourseActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ThreadActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".PostActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
