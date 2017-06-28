@@ -104,6 +104,7 @@
     </LinearLayout>
     <ImageView
         android:id="@+id/imageThreadMain"
+
         android:layout_width="match_parent"
         android:layout_height="720px" />
 
